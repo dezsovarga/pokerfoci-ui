@@ -1,0 +1,19 @@
+.title {
+    color: #000000;
+    padding: 50px;
+  }
+
+ .subtitle {
+    font-size: 22px;
+    padding: 50px 0 0 0;
+
+}
+
+.confirmIcon {
+    width: 100px;
+    /* margin: 30px; */
+}
+
+.confirmContent {
+  padding: 20px
+}
