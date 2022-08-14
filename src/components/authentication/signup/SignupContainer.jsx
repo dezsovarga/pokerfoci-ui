@@ -12,7 +12,7 @@ const SignupContainer = (props) => {
 
     const [signupConfirmed, setSignupConfirmed] = useState(false);
     const [confirmToken, setConfirmToken] = useState("");
-
+    const [validationError, setValidationError] = useState("");
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -24,10 +24,14 @@ const SignupContainer = (props) => {
             password: passwordRef.current.value,
             confirmPassword: confirmPasswordRef.current.value
         }
-        const registerRequest = {
-            accountDto: accountDto
-        }
-        onSignupHandler(registerRequest)
+        if (accountDto.password !== accountDto.confirmPassword) {
+            setValidationError("Password and confirmPassword do not match!");
+        } else{
+            const registerRequest = {
+                accountDto: accountDto
+            }
+            onSignupHandler(registerRequest)
+        }        
     }
 
     async function onSignupHandler(account) {
@@ -38,11 +42,14 @@ const SignupContainer = (props) => {
             'Content-Type': 'application/json'
           }
         });
-        //TODO: add error handling  (already existing account)
         if (response.status === 200) {
             const data = await response.json();
             setSignupConfirmed(true);
             setConfirmToken(data.confirmToken);
+        }
+        if (response.status !== 200) {
+            const data = await response.json();
+            setValidationError(data.reason);
         }
       }  
 
@@ -53,6 +60,7 @@ const SignupContainer = (props) => {
 
             <div className="signup-form">
                 <h3>Sign Up to Pokerfoci</h3>
+                <p className="error">{validationError}</p>
                 <form onSubmit={submitHandler}>
                     
                     <div className="form-group">

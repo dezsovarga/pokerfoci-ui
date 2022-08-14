@@ -35,6 +35,9 @@ body {
 .signup-form .form-group {
 	margin-bottom: 20px;
 }
+.signup-form .error {
+	color: red;
+}
 .signup-form label {
 	font-weight: normal;
 	font-size: 14px;
