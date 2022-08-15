@@ -3,6 +3,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import classes from './ConfirmSignup.module.css';
 import confirmIcon from '../../../assets/check.png';
+import wrongIcon from '../../../assets/red-x.png';
+
 import { Link } from 'react-router-dom';
 
 const ActivateAccount = (props) => {
@@ -10,6 +12,8 @@ const ActivateAccount = (props) => {
     const { confirmToken } = useParams();
     const [loading, setLoading] = useState(false); 
     const [alreadyConfirmed, setAlreadyConfirmed] = useState(false); 
+    const [error, setError] = useState(""); 
+
 
 
     async function activateAccount(confirmToken) {
@@ -23,8 +27,11 @@ const ActivateAccount = (props) => {
       const data = await response.json();
       console.log(data);
       setLoading(false);
-      if (response.status === 409) {
-        setAlreadyConfirmed(true);
+      if (response.status !== 200) {
+        setError(data.reason)
+        if (response.status === 409) {
+          setAlreadyConfirmed(true);
+        }
       }
     }
 
@@ -48,18 +55,29 @@ const ActivateAccount = (props) => {
       );
     }
 
+    const InvalidToken = () => {
+      return (
+        <section>
+          <h2 className={classes.title}>Something went wrong</h2>
+          <img alt="wrongIcon" className={classes.confirmIcon} src={wrongIcon} />
+          <div className={classes.subtitle}>{error}</div>
+        </section>
+      );
+    }
+
     const ConfirmationFeedback = () => {
       return (
         <section>
           {alreadyConfirmed && <AlreadyConfirmed></AlreadyConfirmed>}
-          {!alreadyConfirmed && <SuccesfullyConfirmed></SuccesfullyConfirmed>}
+          {!alreadyConfirmed && !error && <SuccesfullyConfirmed></SuccesfullyConfirmed>}
+          {error && <InvalidToken />}
 
           {/* //TODO: create homepage page */}
-          <Link className="nav-link" to={`/home`}>
+          {!error && <Link className="nav-link" to={`/home`}>
                 <button type="submit" className="btn btn-primary"> 
                     Continue to homepage
                 </button>
-            </Link>
+            </Link>}
         </section>
       );
     }
