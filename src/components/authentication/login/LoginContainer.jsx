@@ -10,11 +10,13 @@ const LoginContainer = (props) => {
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const [isLoading, setIsLoading] = useState(false);
+    const [authError, setAuthError] = useState('');
 
     const submitHandler = (event) => {
         event.preventDefault();
 
         setIsLoading(true);
+        setAuthError('');
         const username = emailRef.current.value;
         const password = passwordRef.current.value;
         const encoded = btoa(`${username}:${password}`);
@@ -34,11 +36,7 @@ const LoginContainer = (props) => {
               return res.json();
             } else {
               return res.json().then((data) => {
-                let errorMessage = 'Authentication failed!';
-                // if (data && data.error && data.error.message) {
-                //   errorMessage = data.error.message;
-                // }
-    
+                let errorMessage = data.reason || 'Authentication failed!';
                 throw new Error(errorMessage);
               });
             }
@@ -48,14 +46,14 @@ const LoginContainer = (props) => {
             navigate("/home", { replace: true });
           })
           .catch((err) => {
-              //TODO: add authentication feedback
-            alert(err.message);
+              setAuthError(err.message);
           });
     }
 
     return (
         <div className="login-form">
-                <h3 className="text-center">Sign in to Pokerfoci</h3>       
+            <h3 className="text-center">Sign in to Pokerfoci</h3>    
+            <p className="error">{authError}</p>
             <form onSubmit={submitHandler}>
                 <div className="form-group">
                     <input type="text" className="form-control" placeholder="Email" required="required" ref={emailRef} />
@@ -63,6 +61,7 @@ const LoginContainer = (props) => {
                 <div className="form-group">
                     <input type="password" className="form-control" placeholder="Password" required="required" ref={passwordRef} />
                 </div>
+                {isLoading && <div>Loading...</div>}
                 <div className="form-group">
                     <button type="submit" className="btn btn-primary btn-block">Log in</button>
                 </div>

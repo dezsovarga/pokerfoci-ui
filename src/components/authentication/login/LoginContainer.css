@@ -3,6 +3,9 @@
     margin: 50px auto;
   	font-size: 15px;
 }
+.login-form .error {
+	color: red;
+}
 .login-form form {
     margin-bottom: 15px;
     background: #f7f7f7;
