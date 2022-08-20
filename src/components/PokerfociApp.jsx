@@ -3,21 +3,25 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import LoginContainer from './authentication/login/LoginContainer.jsx'
 import SignupContainer from './authentication/signup/SignupContainer.jsx'
 import ActivateAccount from './authentication/signup/ActivateAccount.jsx'
+import Header from './home/Header.jsx'
+import Home from './home/Home.jsx'
+import Statistics from './home/Statistics.jsx'
 
 
 const PokerfociApp = (props) => {
 
     return (
-        <div className="TodoApp">
+        <div>
             <Router>
                 <>
-                    {/* <HeaderComponent/> */}
+                    <Header/> 
                     <Routes>
                         <Route path="/" exact element={<LoginContainer/>}/>
                         <Route path="login" element={<LoginContainer/>}/>
                         <Route path="/signup" element={<SignupContainer/>}/>
                         <Route path="/activate-account/:confirmToken" element={<ActivateAccount/>}/>
-
+                        <Route path="/home" element={<Home/>}/>
+                        <Route path="/statistics" element={<Statistics/>}/>
                         {/*<AuthenticatedRoute path="/todos/:id" component={TodoComponent}/>
                         <AuthenticatedRoute path="/todos" component={ListTodosComponent}/>
                         <AuthenticatedRoute path="/logout" component={LogoutComponent}/>

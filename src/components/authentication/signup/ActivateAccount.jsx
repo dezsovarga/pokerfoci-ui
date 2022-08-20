@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import classes from './ConfirmSignup.module.css';
 import confirmIcon from '../../../assets/check.png';
 import wrongIcon from '../../../assets/red-x.png';
+import AuthContext from "../../../store/auth-context";
 
 import { Link } from 'react-router-dom';
 
 const ActivateAccount = (props) => {
 
+    const authCtx = useContext(AuthContext);
     const { confirmToken } = useParams();
     const [loading, setLoading] = useState(false); 
     const [alreadyConfirmed, setAlreadyConfirmed] = useState(false); 
     const [error, setError] = useState(""); 
-
-
 
     async function activateAccount(confirmToken) {
       setLoading(true);
@@ -28,16 +28,17 @@ const ActivateAccount = (props) => {
       console.log(data);
       setLoading(false);
       if (response.status !== 200) {
-        setError(data.reason)
+        setError(data.reason);
         if (response.status === 409) {
           setAlreadyConfirmed(true);
         }
       }
+      authCtx.login(data.bearerToken);
     }
 
     useEffect(() => {
         activateAccount(confirmToken);
-    }, [confirmToken]);  
+    }, []);  
 
     const SuccesfullyConfirmed = () => {
       return (
