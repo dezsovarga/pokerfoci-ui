@@ -25,6 +25,8 @@ const Header = (props) => {
                     {isUserLoggedIn && <li><Link className="nav-link" to="/statistics">Statistics</Link></li>}
                     {isUserLoggedIn && <li><Link className="nav-link" to="/skills">Skills</Link></li>}
                     {isUserLoggedIn && <li><Link className="nav-link" to="/past-events">Past events</Link></li>}
+                    {isUserLoggedIn && <li><Link className="nav-link" to="/user-profile">User profile</Link></li>}
+
                     {!isUserLoggedIn && <li><Link className="nav-link" to="/login">Login</Link></li>}
 
                     {isUserLoggedIn && <li> <button onClick={logoutHandler}>Logout</button> </li>}

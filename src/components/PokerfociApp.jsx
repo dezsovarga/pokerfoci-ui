@@ -7,6 +7,8 @@ import Header from './home/Header.jsx'
 import Home from './home/Home.jsx'
 import Statistics from './home/Statistics.jsx'
 import AuthContext from '../store/auth-context.js';
+import Skills from "./home/Skills";
+import UserProfile from "./profile/UserProfile";
 
 const PokerfociApp = (props) => {
     
@@ -20,10 +22,12 @@ const PokerfociApp = (props) => {
                     <Routes>
                         {isLoggedIn && <Route path="/" exact element={<Home/>}/> }
                         {!isLoggedIn && <Route path="login" element={<LoginContainer/>}/> }
-                        {isLoggedIn && <Route path="/signup" element={<SignupContainer/>}/> }
+                        {!isLoggedIn && <Route path="/signup" element={<SignupContainer/>}/> }
                         <Route path="/activate-account/:confirmToken" element={<ActivateAccount/>}/>
                         {isLoggedIn && <Route path="/home" element={<Home/>}/> }
                         {isLoggedIn && <Route path="/statistics" element={<Statistics/>}/> }
+                        {isLoggedIn && <Route path="/skills" element={<Skills/>}/> }
+                        {isLoggedIn && <Route path="/user-profile" element={<UserProfile/>}/> }
                         {/*<AuthenticatedRoute path="/todos/:id" component={TodoComponent}/>
                         <AuthenticatedRoute path="/todos" component={ListTodosComponent}/>
                         <AuthenticatedRoute path="/logout" component={LogoutComponent}/>

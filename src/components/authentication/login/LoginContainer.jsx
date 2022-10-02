@@ -42,7 +42,8 @@ const LoginContainer = (props) => {
             }
           })
           .then((data) => {
-            authCtx.login(data.bearerToken);
+            const decodedBearerToken = JSON.parse(atob(data.bearerToken));
+            authCtx.login(decodedBearerToken.token, decodedBearerToken.username);
             navigate("/home", { replace: true });
           })
           .catch((err) => {
