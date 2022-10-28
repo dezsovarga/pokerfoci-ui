@@ -52,7 +52,7 @@ const LoginContainer = (props) => {
     }
 
     return (
-        <div className="login-form">
+        <div className="login-form" data-testid='login-form'>
             <h3 className="text-center">Sign in to Pokerfoci</h3>    
             <p className="error">{authError}</p>
             <form onSubmit={submitHandler}>
@@ -72,7 +72,7 @@ const LoginContainer = (props) => {
                 </div>        
             </form>
             <p className="text-center">
-                <Link className="nav-link" to="/signup">Create an Account</Link>
+                <Link className="nav-link" to="/signup" data-testid='signup-link'>Create an Account</Link>
             </p>
         </div>
     )

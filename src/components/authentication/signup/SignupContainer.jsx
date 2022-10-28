@@ -58,7 +58,7 @@ const SignupContainer = (props) => {
     } else {
         return (
 
-            <div className="signup-form">
+            <div className="signup-form" data-testid='signup-form'>
                 <h3>Sign Up to Pokerfoci</h3>
                 <p className="error">{validationError}</p>
                 <form onSubmit={submitHandler}>
