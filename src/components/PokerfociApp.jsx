@@ -21,7 +21,7 @@ const PokerfociApp = (props) => {
                     <Header/> 
                     <Routes>
                         {isLoggedIn && <Route path="/" exact element={<Home/>}/> }
-                        {!isLoggedIn && <Route path="login" element={<LoginContainer/>}/> }
+                        {!isLoggedIn && <Route path="/login" element={<LoginContainer/>}/> }
                         {!isLoggedIn && <Route path="/signup" element={<SignupContainer/>}/> }
                         <Route path="/activate-account/:confirmToken" element={<ActivateAccount/>}/>
                         {isLoggedIn && <Route path="/home" element={<Home/>}/> }

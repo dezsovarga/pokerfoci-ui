@@ -6,6 +6,11 @@ import PokerfociApp from "../../PokerfociApp";
 
 describe('LoginContainer component', () => {
 
+    const navigateToLoginPage = () => {
+        const loginLink = screen.getByTestId('login-link');
+        userEvent.click(loginLink);
+    }
+
     test('renders LoginContainer', () => {
         // Arrange
         render(
@@ -23,16 +28,8 @@ describe('LoginContainer component', () => {
 
     test('clicking on "Create an Account" link navigates to SignupContainer', () => {
         // Arrange
-        render(
-            <PokerfociApp/>);
-
-        // Act - navigate to login page
-        const loginLink = screen.getByTestId('login-link');
-        userEvent.click(loginLink);
-
-        // Assert
-        const loginForm = screen.getByTestId('login-form');
-        expect(loginForm).toBeInTheDocument();
+        render(<PokerfociApp/>);
+        navigateToLoginPage();
 
         // Act - navigate to signup page
         const signupLink = screen.getByTestId('signup-link');

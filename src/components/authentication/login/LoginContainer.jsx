@@ -64,7 +64,7 @@ const LoginContainer = (props) => {
                 </div>
                 {isLoading && <div>Loading...</div>}
                 <div className="form-group">
-                    <button type="submit" className="btn btn-primary btn-block">Log in</button>
+                    <button type="submit" className="btn btn-primary btn-block" data-testid='login-button'>Log in</button>
                 </div>
                 <div className="clearfix">
                     <label className="float-left form-check-label"><input type="checkbox" /> Remember me</label>
