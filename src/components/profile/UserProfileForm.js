@@ -1,15 +1,18 @@
-import React, {useState} from 'react';
+import React from 'react';
 import classes from "./UserProfileForm.module.css";
-import { useRef, useContext } from 'react';
-import AuthContext from '../../store/auth-context';
+import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import {profileActions} from "../../store/profile-slice";
 
 const UserProfileForm = (props) => {
 
+    const dispatch = useDispatch();
     const newPasswordInputRef = useRef();
     const oldPasswordInputRef = useRef();
-    const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
-    const authCtx = useContext(AuthContext);
+    const isLoading = useSelector(state => state.profile.isLoading);
+    const {token, username} = useSelector(state => state.login);
+    const {errorMessage, successMessage} = useSelector(state => state.profile);
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -18,26 +21,31 @@ const UserProfileForm = (props) => {
         const enteredNewPassword = newPasswordInputRef.current.value;
 
         //TODO: add validation
+        dispatch(profileActions.changePasswordRequest());
 
         fetch("http://localhost:8081/account/change-password", {
             method: 'POST',
             body: JSON.stringify({
-                email: authCtx.username,
+                email: username,
                 oldPassword: enteredOldPassword,
                 newPassword: enteredNewPassword
             }),
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authCtx.token}`
+                'Authorization': `Bearer ${token}`
             }
         }).then(res => {
             // assumption: Always succeeds!
             if (res.ok) {
-                setSuccessMessage("Password changed successfully!")
+                dispatch(profileActions.changePasswordSuccess({
+                    successMessage: "Password changed successfully!"
+                }));
             } else {
                 res.json().then((data) => {
                     let errorMessage = data.reason || 'Request for changing password failed';
-                    setErrorMessage(errorMessage);
+                    dispatch(profileActions.changePasswordFailure({
+                        errorMessage: errorMessage
+                    }));
                 });
             }
         });
@@ -55,6 +63,8 @@ const UserProfileForm = (props) => {
                     <label htmlFor='new-password'>New Password</label>
                     <input type='password' id='new-password' minLength="3" ref={newPasswordInputRef}/>
                 </div>
+                {/*TODO: add loading spinner*/}
+                {isLoading && <div>Loading...</div>}
                 <div className={classes.action}>
                     <button type="submit">Change Password</button>
                 </div>

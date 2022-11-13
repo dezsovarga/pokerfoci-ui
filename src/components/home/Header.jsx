@@ -1,16 +1,18 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../../store/auth-context';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {loginActions} from "../../store/login-slice";
 
 const Header = (props) => {
 
-    const authCtx = useContext(AuthContext);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     
-    const isUserLoggedIn = authCtx.isLoggedIn;
+    const isUserLoggedIn = useSelector(state => state.login.isLoggedIn)
 
     const logoutHandler = () => {
-        authCtx.logout();
+        dispatch(loginActions.logout());
         navigate("/login", { replace: true });
     }
 

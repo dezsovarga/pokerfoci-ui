@@ -1,22 +1,23 @@
 import React , {useState, useRef, useContext} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginContainer.css';
-import AuthContext from "../../../store/auth-context";
+import { loginActions } from '../../../store/login-slice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const LoginContainer = (props) => {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const authCtx = useContext(AuthContext);
     const emailRef = useRef('');
     const passwordRef = useRef('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [authError, setAuthError] = useState('');
+    const isLoading = useSelector(state => state.login.isLoading);
+    const authError = useSelector(state => state.login.authError);
 
     const submitHandler = (event) => {
         event.preventDefault();
 
-        setIsLoading(true);
-        setAuthError('');
+        dispatch(loginActions.loginRequest());
         const username = emailRef.current.value;
         const password = passwordRef.current.value;
         const encoded = btoa(`${username}:${password}`);
@@ -31,7 +32,6 @@ const LoginContainer = (props) => {
             },
           })
           .then((res) => {
-            setIsLoading(false);
             if (res.ok) {
               return res.json();
             } else {
@@ -43,11 +43,16 @@ const LoginContainer = (props) => {
           })
           .then((data) => {
             const decodedBearerToken = JSON.parse(atob(data.bearerToken));
-            authCtx.login(decodedBearerToken.token, decodedBearerToken.username);
+            dispatch(loginActions.loginSuccess({
+                username: decodedBearerToken.username,
+                token: decodedBearerToken.token,
+            }));
             navigate("/home", { replace: true });
           })
           .catch((err) => {
-              setAuthError(err.message);
+              dispatch(loginActions.loginFailure({
+                  authError: err.message,
+              }));
           });
     }
 
@@ -62,6 +67,7 @@ const LoginContainer = (props) => {
                 <div className="form-group">
                     <input type="password" className="form-control" placeholder="Password" required="required" ref={passwordRef} />
                 </div>
+                {/*TODO: add loading spinner*/}
                 {isLoading && <div>Loading...</div>}
                 <div className="form-group">
                     <button type="submit" className="btn btn-primary btn-block" data-testid='login-button'>Log in</button>

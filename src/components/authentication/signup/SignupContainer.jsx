@@ -2,17 +2,22 @@ import React, { useRef, useState } from 'react';
 import './SignupContainer.css';
 import { Link } from 'react-router-dom';
 import ConfirmSignup from './ConfirmSignup';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import {signupActions} from "../../../store/signup-slice";
 
 const SignupContainer = (props) => {
 
+    const dispatch = useDispatch();
     const userNameRef = useRef('');
     const emailRef = useRef('');
     const passwordRef = useRef('');
-    const confirmPasswordRef = useRef('');  
+    const confirmPasswordRef = useRef('');
 
-    const [signupConfirmed, setSignupConfirmed] = useState(false);
-    const [confirmToken, setConfirmToken] = useState("");
-    const [validationError, setValidationError] = useState("");
+    const signupSuccessful = useSelector(state => state.signup.signupSuccessful)
+    const confirmToken = useSelector(state => state.signup.confirmToken)
+    const validationError = useSelector(state => state.signup.validationError)
+    const isLoading = useSelector(state => state.signup.isLoading)
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -25,7 +30,9 @@ const SignupContainer = (props) => {
             confirmPassword: confirmPasswordRef.current.value
         }
         if (accountDto.password !== accountDto.confirmPassword) {
-            setValidationError("Password and confirmPassword do not match!");
+            dispatch(signupActions.signupFailure({
+                validationError: "Password and confirmPassword do not match!"
+            }));
         } else{
             const registerRequest = {
                 accountDto: accountDto
@@ -35,6 +42,8 @@ const SignupContainer = (props) => {
     }
 
     async function onSignupHandler(account) {
+        dispatch(signupActions.signupRequest());
+
         const response = await fetch('http://localhost:8081/account/register', {
           method: 'POST',
           body: JSON.stringify(account),
@@ -44,16 +53,19 @@ const SignupContainer = (props) => {
         });
         if (response.status === 200) {
             const data = await response.json();
-            setSignupConfirmed(true);
-            setConfirmToken(data.confirmToken);
+            dispatch(signupActions.signupSuccess({
+                confirmToken: data.confirmToken
+            }));
         }
         if (response.status !== 200) {
             const data = await response.json();
-            setValidationError(data.reason);
+            dispatch(signupActions.signupFailure({
+                validationError: data.reason
+            }));
         }
       }  
 
-    if (signupConfirmed) {
+    if (signupSuccessful) {
         return <ConfirmSignup confirmToken={confirmToken}/>
     } else {
         return (
@@ -79,6 +91,8 @@ const SignupContainer = (props) => {
                         <label className="form-check-label"><input type="checkbox" required="required" /> 
                         I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
                     </div>
+                    {/*TODO: add loading spinner*/}
+                    {isLoading && <div>Loading...</div>}
                     <div className="form-group">
                         <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
                     </div>

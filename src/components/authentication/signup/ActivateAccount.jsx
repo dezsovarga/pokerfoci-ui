@@ -4,20 +4,26 @@ import { useParams } from 'react-router-dom';
 import classes from './ConfirmSignup.module.css';
 import confirmIcon from '../../../assets/check.png';
 import wrongIcon from '../../../assets/red-x.png';
-import AuthContext from "../../../store/auth-context";
-
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {activateAccountActions} from "../../../store/account-activation-slice";
+import {loginActions} from "../../../store/login-slice";
+import {signupActions} from "../../../store/signup-slice";
 
 const ActivateAccount = (props) => {
 
-    const authCtx = useContext(AuthContext);
+    const dispatch = useDispatch();
     const { confirmToken } = useParams();
-    const [loading, setLoading] = useState(false); 
-    const [alreadyConfirmed, setAlreadyConfirmed] = useState(false); 
-    const [error, setError] = useState(""); 
+
+    const loading = useSelector(state => state.accountActivation.isLoading);
+    const alreadyConfirmed = useSelector(state => state.accountActivation.alreadyConfirmed);
+    const error = useSelector(state => state.accountActivation.activationError)
 
     async function activateAccount(confirmToken) {
-      setLoading(true);
+
+      dispatch(activateAccountActions.confirmRequest());
+
       const response = await fetch(`http://localhost:8081/account/register/confirm/${confirmToken}`, {
         method: 'GET',
         headers: {
@@ -26,14 +32,22 @@ const ActivateAccount = (props) => {
       });
       const data = await response.json();
       console.log(data);
-      setLoading(false);
       if (response.status !== 200) {
-        setError(data.reason);
-        if (response.status === 409) {
-          setAlreadyConfirmed(true);
+          dispatch(activateAccountActions.confirmFailure({
+              activationError: data.reason
+          }));
+          if (response.status === 409) {
+              dispatch(activateAccountActions.confirmFailure({
+                  alreadyConfirmed: true
+              }));
         }
       }
-      authCtx.login(data.bearerToken);
+      dispatch(activateAccountActions.confirmSuccess());
+      dispatch(signupActions.clearSignupData());
+      dispatch(loginActions.loginSuccess({
+          username: data.username,
+          token: data.bearerToken,
+      }));
     }
 
     useEffect(() => {
@@ -73,7 +87,6 @@ const ActivateAccount = (props) => {
           {!alreadyConfirmed && !error && <SuccesfullyConfirmed></SuccesfullyConfirmed>}
           {error && <InvalidToken />}
 
-          {/* //TODO: create homepage page */}
           {!error && <Link className="nav-link" to={`/home`}>
                 <button type="submit" className="btn btn-primary"> 
                     Continue to homepage
