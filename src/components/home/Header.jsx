@@ -20,10 +20,10 @@ const Header = (props) => {
         <header>
             <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                 <h2 className="navbar-brand"> 
-                    <Link className="nav-link" to="/">Pokerfoci</Link> </h2>
+                    <Link className="nav-link" to="/" data-testid='header-pokerfoci'>Pokerfoci</Link> </h2>
 
                 <ul className="navbar-nav navbar-collapse justify-content-end">
-                    {isUserLoggedIn && <li><Link className="nav-link" to="/home">Home</Link></li>}
+                    {isUserLoggedIn && <li><Link className="nav-link" to="/home" data-testid='home-link'>Home</Link></li>}
                     {isUserLoggedIn && <li><Link className="nav-link" to="/statistics">Statistics</Link></li>}
                     {isUserLoggedIn && <li><Link className="nav-link" to="/skills">Skills</Link></li>}
                     {isUserLoggedIn && <li><Link className="nav-link" to="/past-events">Past events</Link></li>}
@@ -31,7 +31,7 @@ const Header = (props) => {
 
                     {!isUserLoggedIn && <li><Link className="nav-link" to="/login" data-testid='login-link'>Login</Link></li>}
 
-                    {isUserLoggedIn && <li> <button onClick={logoutHandler}>Logout</button> </li>}
+                    {isUserLoggedIn && <li> <button onClick={logoutHandler} data-testid='logout-button'>Logout</button> </li>}
                 </ul>
             </nav>
         </header>

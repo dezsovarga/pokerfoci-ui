@@ -1,4 +1,4 @@
-import React , {useState, useRef, useContext} from 'react';
+import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LoginContainer.css';
 import { loginActions } from '../../../store/login-slice';
@@ -58,7 +58,7 @@ const LoginContainer = (props) => {
 
     return (
         <div className="login-form" data-testid='login-form'>
-            <h3 className="text-center">Sign in to Pokerfoci</h3>    
+            <h3 className="text-center">Sign in to Pokerfoci</h3>
             <p className="error">{authError}</p>
             <form onSubmit={submitHandler}>
                 <div className="form-group">
@@ -75,7 +75,7 @@ const LoginContainer = (props) => {
                 <div className="clearfix">
                     <label className="float-left form-check-label"><input type="checkbox" /> Remember me</label>
                     <a href="#" className="float-right">Forgot Password?</a>
-                </div>        
+                </div>
             </form>
             <p className="text-center">
                 <Link className="nav-link" to="/signup" data-testid='signup-link'>Create an Account</Link>

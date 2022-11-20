@@ -19,10 +19,15 @@ const PokerfociApp = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(loginActions.loginSuccess({
-            token: localStorage.getItem('token'),
-            username: localStorage.getItem('username'),
-        }));
+        let token = localStorage.getItem('token');
+        let username = localStorage.getItem('username');
+        if (token && username) {
+            dispatch(loginActions.loginSuccess({
+                token: token,
+                username: username,
+            }));
+        }
+
     }, []);
 
     const isLoggedIn = useSelector(state => state.login.isLoggedIn)

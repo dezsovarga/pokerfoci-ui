@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import PokerFociApp from './components/PokerfociApp';
 import './bootstrap.css';

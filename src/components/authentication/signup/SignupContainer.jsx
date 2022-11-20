@@ -51,13 +51,13 @@ const SignupContainer = (props) => {
             'Content-Type': 'application/json'
           }
         });
-        if (response.status === 200) {
+        if (response.ok) {
             const data = await response.json();
             dispatch(signupActions.signupSuccess({
                 confirmToken: data.confirmToken
             }));
         }
-        if (response.status !== 200) {
+        if (!response.ok) {
             const data = await response.json();
             dispatch(signupActions.signupFailure({
                 validationError: data.reason
@@ -72,7 +72,7 @@ const SignupContainer = (props) => {
 
             <div className="signup-form" data-testid='signup-form'>
                 <h3>Sign Up to Pokerfoci</h3>
-                <p className="error">{validationError}</p>
+                <p className="error" data-testid='validation-error'> {validationError} </p>
                 <form onSubmit={submitHandler}>
                     
                     <div className="form-group">
@@ -94,11 +94,11 @@ const SignupContainer = (props) => {
                     {/*TODO: add loading spinner*/}
                     {isLoading && <div>Loading...</div>}
                     <div className="form-group">
-                        <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                        <button type="submit" className="btn btn-primary btn-block" data-testid='signup-button'>Sign Up</button>
                     </div>
                 </form>
                 <div className="text-center">Already have an account? 
-                    <Link className="nav-link" to="/login">Login here</Link>
+                    <Link className="nav-link" to="/login" data-testid='login-here-link'>Login here</Link>
                 </div>
             </div>
         )
