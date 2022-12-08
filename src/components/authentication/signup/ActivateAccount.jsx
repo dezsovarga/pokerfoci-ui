@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect } from "react";
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import classes from './ConfirmSignup.module.css';
@@ -31,7 +31,6 @@ const ActivateAccount = (props) => {
         }
       });
       const data = await response.json();
-      console.log(data);
       if (response.status !== 200) {
           dispatch(activateAccountActions.confirmFailure({
               activationError: data.reason
@@ -40,25 +39,26 @@ const ActivateAccount = (props) => {
               dispatch(activateAccountActions.confirmFailure({
                   alreadyConfirmed: true
               }));
-        }
+          }
+      } else {
+          dispatch(activateAccountActions.confirmSuccess());
+          dispatch(signupActions.clearSignupData());
+          dispatch(loginActions.loginSuccess({
+              username: data.username,
+              token: data.bearerToken,
+          }));
       }
-      dispatch(activateAccountActions.confirmSuccess());
-      dispatch(signupActions.clearSignupData());
-      dispatch(loginActions.loginSuccess({
-          username: data.username,
-          token: data.bearerToken,
-      }));
     }
 
     useEffect(() => {
         activateAccount(confirmToken);
-    }, []);  
+    }, []);
 
     const SuccesfullyConfirmed = () => {
       return (
         <section>
-          <h2 className={classes.title}>Congratulations! Your account has been confirmed succesfully!</h2>
-          <img alt="confirmIcon" className={classes.confirmIcon} src={confirmIcon} />
+          <h2 className={classes.title} data-testid='confirmed-successfully'>Congratulations! Your account has been confirmed successfully!</h2>
+          <img alt="confirmIcon" className={classes.confirmIcon} src={confirmIcon} data-testid='confirm-activation-icon'/>
           <div className={classes.subtitle}>You can now login in the application</div>
         </section>
       );
@@ -87,7 +87,7 @@ const ActivateAccount = (props) => {
           {!alreadyConfirmed && !error && <SuccesfullyConfirmed></SuccesfullyConfirmed>}
           {error && <InvalidToken />}
 
-          {!error && <Link className="nav-link" to={`/home`}>
+          {!error && <Link className="nav-link" to={`/home`} data-testid='continue-to-homepage-button'>
                 <button type="submit" className="btn btn-primary"> 
                     Continue to homepage
                 </button>

@@ -33,6 +33,8 @@ const loginSlice = createSlice({
         logout(state) {
             state.token = '';
             state.isLoggedIn = false;
+            state.username = '';
+            state.token = '';
             localStorage.removeItem('token');
             localStorage.removeItem('username');
         }

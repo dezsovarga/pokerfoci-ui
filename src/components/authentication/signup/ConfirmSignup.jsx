@@ -3,7 +3,6 @@ import classes from './ConfirmSignup.module.css';
 import confirmIcon from '../../../assets/check.png';
 import { Link } from 'react-router-dom';
 
-
 const ConfirmSignup = (props) => {
     return (
         <div>
@@ -12,11 +11,11 @@ const ConfirmSignup = (props) => {
             <div className={classes.subtitle}>Thank you for your registration</div>
 
             <div className={classes.confirmContent}>
-                You will recieve a confirmation email with a verification link <br/>
+                You will receive a confirmation email with a verification link <br/>
             </div>
 
-            <Link className="nav-link" to={`/activate-account/${props.confirmToken}`}>
-                <button type="submit" className="btn btn-primary"> 
+            <Link className="nav-link" to={`/activate-account/${props.confirmToken}`} data-testid='activate-account-button'>
+                <button className="btn btn-primary" >
                     Activate your account
                 </button>
             </Link>
