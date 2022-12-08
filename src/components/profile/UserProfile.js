@@ -10,8 +10,8 @@ const UserProfile = (props) => {
 
     return (
         <section className={classes.starting}>
-            <img className={classes.avatarIcon} src={avatarIcon} />
-            <h3>{username}</h3>
+            <img className={classes.avatarIcon} src={avatarIcon} data-testid='avatar-icon'/>
+            <h3 data-testid='logged-in-username'>{username}</h3>
             <UserProfileForm />
         </section>
     )

@@ -39,4 +39,12 @@ function activateAccount() {
     });
 }
 
-export const handlers = [login(), signup(), activateAccount()];
+function changePassword() {
+    return rest.post('http://localhost:8081/account/change-password', (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+        );
+    });
+}
+
+export const handlers = [login(), signup(), activateAccount(), changePassword()];

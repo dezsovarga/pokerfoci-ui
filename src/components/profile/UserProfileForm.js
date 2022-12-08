@@ -66,7 +66,7 @@ const UserProfileForm = (props) => {
                 {/*TODO: add loading spinner*/}
                 {isLoading && <div>Loading...</div>}
                 <div className={classes.action}>
-                    <button type="submit">Change Password</button>
+                    <button type="submit" data-testid='change-password-button'>Change Password</button>
                 </div>
             </form>
         </section>
