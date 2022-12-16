@@ -10,6 +10,8 @@ const Header = (props) => {
     const navigate = useNavigate();
     
     const isUserLoggedIn = useSelector(state => state.login.isLoggedIn)
+    const userRoles = useSelector(state => state.login.roles)
+    const isUserAdmin = userRoles.includes("ROLE_ADMIN");
 
     const logoutHandler = () => {
         dispatch(loginActions.logout());
@@ -28,6 +30,7 @@ const Header = (props) => {
                     {isUserLoggedIn && <li><Link className="nav-link" to="/skills">Skills</Link></li>}
                     {isUserLoggedIn && <li><Link className="nav-link" to="/past-events">Past events</Link></li>}
                     {isUserLoggedIn && <li><Link className="nav-link" to="/user-profile">User profile</Link></li>}
+                    {isUserLoggedIn && isUserAdmin && <li><Link className="nav-link" to="/admin-page" data-testid='admin-page-link' >Admin page</Link></li>}
 
                     {!isUserLoggedIn && <li><Link className="nav-link" to="/login" data-testid='login-link'>Login</Link></li>}
 
