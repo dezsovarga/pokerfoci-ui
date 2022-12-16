@@ -46,6 +46,7 @@ const LoginContainer = (props) => {
             dispatch(loginActions.loginSuccess({
                 username: decodedBearerToken.username,
                 token: decodedBearerToken.token,
+                roles: data.roles
             }));
             navigate("/home", { replace: true });
           })

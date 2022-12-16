@@ -5,6 +5,7 @@ const loginSlice = createSlice({
     initialState: {
         token: localStorage.getItem('token'),
         username: localStorage.getItem('username'),
+        roles: [],
         isLoggedIn: false,
         isLoading: false,
         authError: ''
@@ -18,10 +19,12 @@ const loginSlice = createSlice({
         loginSuccess(state, action) {
             state.isLoading = false;
             state.username = action.payload.username;
+            state.roles = action.payload.roles;
             state.token = action.payload.token;
             state.isLoggedIn = !!action.payload.token;
             localStorage.setItem('token', action.payload.token);
             localStorage.setItem('username', action.payload.username);
+            localStorage.setItem('roles', action.payload.roles);
             state.authError = '';
         },
 
@@ -37,6 +40,7 @@ const loginSlice = createSlice({
             state.token = '';
             localStorage.removeItem('token');
             localStorage.removeItem('username');
+            localStorage.removeItem('roles');
         }
     }
 });

@@ -46,6 +46,7 @@ const ActivateAccount = (props) => {
           dispatch(loginActions.loginSuccess({
               username: data.username,
               token: data.bearerToken,
+              roles: data.roles,
           }));
       }
     }
