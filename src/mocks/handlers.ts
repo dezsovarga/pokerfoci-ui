@@ -6,6 +6,7 @@ function login() {
             ctx.status(200),
             ctx.json(
                 {
+                    roles: ['ROLE_USER'],
                     username: 'bogikaaa',
                     bearerToken: 'eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUo5LmV5SmxlSEFpT2pFMk5qZ3hOell3Tnprc0luTjFZaUk2SW1KdloybEFkbUZ5WjJFdVkyOXRJaXdpY205c1pYTWlPaUoxYzJWeUlpd2lhV0YwSWpveE5qWTJPVFkyTkRjNWZRLi1mUDNjNm4wYTlQd3l5NW5EeXlFNGlRdWx2MGJCRFhweEdzeTZlS0FZZVEiLCJ1c2VybmFtZSI6ImJvZ2lAdmFyZ2EuY29tIn0'}
             )

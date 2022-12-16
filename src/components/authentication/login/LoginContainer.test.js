@@ -50,6 +50,7 @@ describe('LoginContainer component', () => {
         //Assert
         const logoutButton = await screen.findByTestId('logout-button');
         expect(logoutButton).toBeInTheDocument();
+        expect(store.getState().login.roles).toEqual(['ROLE_USER']);
     });
 
 });
