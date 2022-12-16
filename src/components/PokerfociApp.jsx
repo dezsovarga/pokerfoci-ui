@@ -21,10 +21,13 @@ const PokerfociApp = (props) => {
     useEffect(() => {
         let token = localStorage.getItem('token');
         let username = localStorage.getItem('username');
+        let roles = localStorage.getItem('roles');
+
         if (token && username) {
             dispatch(loginActions.loginSuccess({
                 token: token,
                 username: username,
+                roles: roles
             }));
         }
 
