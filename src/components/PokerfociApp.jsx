@@ -10,6 +10,7 @@ import Skills from "./home/Skills";
 import UserProfile from "./profile/UserProfile";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import AdminPage from './admin/AdminPage.jsx';
 
 import {loginActions} from "../store/login-slice";
 
@@ -34,6 +35,8 @@ const PokerfociApp = (props) => {
     }, []);
 
     const isLoggedIn = useSelector(state => state.login.isLoggedIn)
+    const userRoles = useSelector(state => state.login.roles)
+    const isUserAdmin = userRoles.includes("ROLE_ADMIN");
     return (
         <div>
             <Router>
@@ -48,6 +51,8 @@ const PokerfociApp = (props) => {
                         {isLoggedIn && <Route path="/statistics" element={<Statistics/>}/> }
                         {isLoggedIn && <Route path="/skills" element={<Skills/>}/> }
                         {isLoggedIn && <Route path="/user-profile" element={<UserProfile/>}/> }
+                        {isLoggedIn && isUserAdmin && <Route path="/admin-page" element={<AdminPage/>}/> }
+
                         {/*<AuthenticatedRoute path="/todos/:id" component={TodoComponent}/>
                         <AuthenticatedRoute path="/todos" component={ListTodosComponent}/>
                         <AuthenticatedRoute path="/logout" component={LogoutComponent}/>
