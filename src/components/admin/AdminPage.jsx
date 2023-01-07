@@ -1,12 +1,16 @@
-import classes from "../home/Home.module.css";
 import React from "react";
+import AdminHeader from "./AdminHeader";
+import PlayersTable from "./PlayersTable";
 
 const AdminPage = () => {
 
     return (
-        <section className={classes.starting}>
-            <h1>Admin page</h1>
-        </section>
+        <div >
+            <h2>Admin page</h2>
+            <AdminHeader />
+            <PlayersTable></PlayersTable>
+
+        </div>
     )
 }
 
