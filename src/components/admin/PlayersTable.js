@@ -22,6 +22,8 @@ const PlayersTable = () => {
     ];
     const isLoading = useSelector(state => state.admin.accounts.isLoading);
     const accounts = useSelector(state => state.admin.accounts.accountData);
+    const loadingError = useSelector(state => state.admin.accounts.loadingError);
+
 
     async function loadAccounts() {
         dispatch(adminActions.loadAccountsRequest());
@@ -36,7 +38,7 @@ const PlayersTable = () => {
         const data = await response.json();
         if (response.status !== 200) {
             dispatch(adminActions.loadAccountsFailure({
-                loadingError: data.reason
+                loadingError: data.reason || data.error
             }));
         } else {
             dispatch(adminActions.loadAccountsSuccess({data: data}));
@@ -51,7 +53,7 @@ const PlayersTable = () => {
 
     const AdminAccountsTable = () => {
         return (
-            <section className={classes.tableWidth}>
+            <section className={classes.tableWidth} data-testid='admin-players-table'>
                 <ThemeProvider theme={defaultMaterialTheme}>
                     <MaterialTable
                         columns={columns}
@@ -79,8 +81,9 @@ const PlayersTable = () => {
 
     return (
         <React.Fragment>
+            <p className={classes.loadingError}>{loadingError}</p>
             {isLoading && <p>Loading...</p>}
-            {!isLoading && <AdminAccountsTable></AdminAccountsTable>}
+            {!isLoading && !loadingError && <AdminAccountsTable></AdminAccountsTable>}
 
         </React.Fragment>
     );

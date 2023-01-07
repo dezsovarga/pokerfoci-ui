@@ -22,8 +22,8 @@ const adminSlice = createSlice({
         },
 
         loadAccountsFailure(state, action) {
-            state.isLoading = false;
-            state.authError = action.payload.authError;
+            state.accounts.isLoading = false;
+            state.accounts.loadingError = action.payload.loadingError;
         }
     }
 });

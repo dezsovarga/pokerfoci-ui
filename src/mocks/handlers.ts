@@ -34,7 +34,8 @@ function activateAccount() {
             ctx.json(
                 {
                     username: 'boglarka',
-                    bearerToken: 'eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUo5LmV5SmxlSEFpT2pFMk5qZ3hOell3Tnprc0luTjFZaUk2SW1KdloybEFkbUZ5WjJFdVkyOXRJaXdpY205c1pYTWlPaUoxYzJWeUlpd2lhV0YwSWpveE5qWTJPVFkyTkRjNWZRLi1mUDNjNm4wYTlQd3l5NW5EeXlFNGlRdWx2MGJCRFhweEdzeTZlS0FZZVEiLCJ1c2VybmFtZSI6ImJvZ2lAdmFyZ2EuY29tIn0'
+                    bearerToken: 'eyJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUo5LmV5SmxlSEFpT2pFMk5qZ3hOell3Tnprc0luTjFZaUk2SW1KdloybEFkbUZ5WjJFdVkyOXRJaXdpY205c1pYTWlPaUoxYzJWeUlpd2lhV0YwSWpveE5qWTJPVFkyTkRjNWZRLi1mUDNjNm4wYTlQd3l5NW5EeXlFNGlRdWx2MGJCRFhweEdzeTZlS0FZZVEiLCJ1c2VybmFtZSI6ImJvZ2lAdmFyZ2EuY29tIn0',
+                    roles: ['ROLE_USER']
                 })
         );
     });
@@ -48,4 +49,25 @@ function changePassword() {
     });
 }
 
-export const handlers = [login(), signup(), activateAccount(), changePassword()];
+function loadAccountsForAdmin() {
+    return rest.get('http://localhost:8081/admin/accounts', (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json(
+                [{
+                    id: 1,
+                    username: 'dezsovarga',
+                    admin: false,
+                    active: true
+                },
+                    {
+                        id: 2,
+                        username: 'szury',
+                        admin: true,
+                        active: false
+                    }])
+        );
+    });
+}
+
+export const handlers = [login(), signup(), activateAccount(), changePassword(), loadAccountsForAdmin()];
