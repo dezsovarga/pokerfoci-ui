@@ -6,8 +6,13 @@ const adminSlice = createSlice({
         accounts: {
             accountData: [],
             isLoading: false,
-            loadingError: ''
+            loadingError: '',
+            showAddNewPlayerModal: false
         },
+        saveAccount: {
+            isLoading: false,
+            loadingError: ''
+        }
     },
     reducers: {
         loadAccountsRequest(state) {
@@ -24,6 +29,29 @@ const adminSlice = createSlice({
         loadAccountsFailure(state, action) {
             state.accounts.isLoading = false;
             state.accounts.loadingError = action.payload.loadingError;
+        },
+
+        closeAddNewPlayerModal(state, action) {
+            state.accounts.showAddNewPlayerModal = false
+        },
+
+        openAddNewPlayerModal(state, action) {
+            state.accounts.showAddNewPlayerModal = true
+        },
+
+        saveAccountRequest(state, action) {
+            state.saveAccount.isLoading = true
+            state.saveAccount.loadingError = ''
+        },
+
+        saveAccountSuccess(state, action) {
+            state.saveAccount.isLoading = false
+            state.saveAccount.loadingError = ''
+        },
+
+        saveAccountFailure(state, action) {
+            state.saveAccount.isLoading = false
+            state.saveAccount.loadingError = action.error
         }
     }
 });

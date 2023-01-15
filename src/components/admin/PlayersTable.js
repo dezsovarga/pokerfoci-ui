@@ -6,6 +6,7 @@ import classes from './PlayersTable.module.css';
 import Switch from '@mui/material/Switch';
 import {useDispatch, useSelector} from "react-redux";
 import {adminActions} from "../../store/admin-slice";
+import NewPlayerModal from "./NewPlayerModal";
 
 const PlayersTable = () => {
 
@@ -24,6 +25,7 @@ const PlayersTable = () => {
     const accounts = useSelector(state => state.admin.accounts.accountData);
     const loadingError = useSelector(state => state.admin.accounts.loadingError);
 
+    const handleShowNewPlayerModal = () => dispatch(adminActions.openAddNewPlayerModal());
 
     async function loadAccounts() {
         dispatch(adminActions.loadAccountsRequest());
@@ -73,6 +75,14 @@ const PlayersTable = () => {
                                 labelDisplayedRows:""
                             }
                         }}
+                        actions={[
+                            {
+                                icon: 'add',
+                                tooltip: 'Add User',
+                                isFreeAction: true,
+                                onClick: (event) => {handleShowNewPlayerModal()}
+                            }
+                        ]}
                     />
                 </ThemeProvider>
             </section>
@@ -84,6 +94,7 @@ const PlayersTable = () => {
             <p className={classes.loadingError}>{loadingError}</p>
             {isLoading && <p>Loading...</p>}
             {!isLoading && !loadingError && <AdminAccountsTable></AdminAccountsTable>}
+            <NewPlayerModal refreshAccounts={loadAccounts}/>
 
         </React.Fragment>
     );

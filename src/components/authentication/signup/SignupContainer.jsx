@@ -21,7 +21,6 @@ const SignupContainer = (props) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        console.log("signupclicked")
 
         const accountDto = {
             username: userNameRef.current.value,
@@ -63,7 +62,7 @@ const SignupContainer = (props) => {
                 validationError: data.reason
             }));
         }
-      }  
+    }
 
     if (signupSuccessful) {
         return <ConfirmSignup confirmToken={confirmToken}/>
