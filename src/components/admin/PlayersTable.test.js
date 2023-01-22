@@ -3,6 +3,7 @@ import PlayersTable from "./PlayersTable";
 import {screen} from "@testing-library/react";
 import server from "../../mocks/server";
 import {rest} from "msw";
+import userEvent from "@testing-library/user-event";
 
 const initialState = {
     login: {
@@ -34,6 +35,10 @@ const initialState = {
             accountData: [],
             isLoading: false,
             loadingError: ''
+        },
+        saveAccount: {
+            isLoading: false,
+            savingError: ''
         }
     }
 }
@@ -69,5 +74,23 @@ describe ('PlayersTable component', () => {
 
         const serverError = await screen.findByText('Internal Server Error');
         expect(serverError).toBeInTheDocument();
+    })
+
+    test('Clicking on the PLUS button, the  newPlayerModal is rendered', async () => {
+
+        // Arrange
+        let {store} = renderWithProviders(<PlayersTable/>, { preloadedState: initialState});
+
+        // Action
+        const addNewPlayerButton = await screen.findByTestId('add-new-account');
+        userEvent.click(addNewPlayerButton);
+
+        // Assert
+
+        const addNewPlayerModalTitle = await screen.findByText('Add new player');
+        expect(addNewPlayerModalTitle).toBeInTheDocument();
+
+        const addNewPlayerModalCloseButton = await screen.findByTestId('add-new-player-modal-close');
+        expect(addNewPlayerModalCloseButton).toBeInTheDocument();
     })
 })

@@ -5,13 +5,16 @@ import Button from 'react-bootstrap/Button';
 import {useDispatch, useSelector} from "react-redux";
 import {adminActions} from "../../store/admin-slice";
 import { useRef } from 'react';
-import {signupActions} from "../../store/signup-slice";
+import classes from "./NewPlayerModal.module.css";
 
 const NewPlayerModal = (props) => {
 
     const dispatch = useDispatch();
     const showModal = useSelector(state => state.admin.accounts.showAddNewPlayerModal);
     const token = useSelector(state => state.login.token);
+
+    const saveAccountError = useSelector(state => state.admin.saveAccount.savingError);
+    const saveAccountLoader = useSelector(state => state.admin.saveAccount.isLoading);
 
     const userNameRef = useRef('');
     const skillRef = useRef('');
@@ -35,7 +38,9 @@ const NewPlayerModal = (props) => {
         }
 
         if (accountDto.password !== accountDto.confirmPassword) {
-            //TODO validation feedback
+            dispatch(adminActions.saveAccountFailure({
+                error: 'Password and confirmPassword should match'
+            }));
         } else {
             onSaveAccountHandler(accountDto)
         }
@@ -51,6 +56,10 @@ const NewPlayerModal = (props) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
+        }).catch((err) => {
+            dispatch(adminActions.saveAccountFailure({
+                error: err.message
+            }));
         });
         if (response.ok) {
             // const data = await response.json();
@@ -61,7 +70,8 @@ const NewPlayerModal = (props) => {
         }
         if (!response.ok) {
             const data = await response.json();
-            dispatch(signupActions.signupFailure({
+            //TODO: add error feedback
+            dispatch(adminActions.saveAccountFailure({
                 error: data.reason
             }));
         }
@@ -69,38 +79,47 @@ const NewPlayerModal = (props) => {
 
     return (
         <React.Fragment>
-            <Modal show={showModal} onHide={handleClose}>
+            <Modal show={showModal} onHide={handleClose} data-testid='add-new-player-modal'>
                 <Modal.Header closeButton={true}>
                     <Modal.Title>Add new player</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicUsername">
+                            <Form.Label>Username</Form.Label>
                             <Form.Control required type="text" placeholder="Username" ref={userNameRef}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicSkill">
+                            <Form.Label>Skill</Form.Label>
                             <Form.Control required type="text" placeholder="Skill" ref={skillRef}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Email address</Form.Label>
                             <Form.Control required type="email" placeholder="Email" ref={emailRef}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Control required type="password" placeholder="Password" ref={passwordRef}/>
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control required type="password" placeholder="Password" ref={passwordRef}
+                                          data-testid= "password-input"/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-                            <Form.Control required type="password" placeholder="Confirm Password" ref={confirmPasswordRef}/>
+                            <Form.Label>Confirm password</Form.Label>
+                            <Form.Control required type="password" placeholder="Confirm Password" ref={confirmPasswordRef}
+                                          data-testid= "confirm-password-input"/>
                         </Form.Group>
+                        <p className={classes.error}>{saveAccountError}</p>
+                        {saveAccountLoader && <div>Loading...</div>}
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleClose} data-testid='add-new-player-modal-close'>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleSubmit} type="submit">
+                    <Button variant="primary" onClick={handleSubmit} type="submit" data-testid='new-player-submit-button'>
                         Submit
                     </Button>
                 </Modal.Footer>

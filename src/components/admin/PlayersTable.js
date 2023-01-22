@@ -7,6 +7,7 @@ import Switch from '@mui/material/Switch';
 import {useDispatch, useSelector} from "react-redux";
 import {adminActions} from "../../store/admin-slice";
 import NewPlayerModal from "./NewPlayerModal";
+import { PlusCircle } from 'react-bootstrap-icons';
 
 const PlayersTable = () => {
 
@@ -36,6 +37,10 @@ const PlayersTable = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
+        }).catch((err) => {
+            dispatch(adminActions.loadAccountsFailure({
+                loadingError: err.message
+            }));
         });
         const data = await response.json();
         if (response.status !== 200) {
@@ -77,7 +82,7 @@ const PlayersTable = () => {
                         }}
                         actions={[
                             {
-                                icon: 'add',
+                                icon: () => <PlusCircle data-testid='add-new-account'/>,
                                 tooltip: 'Add User',
                                 isFreeAction: true,
                                 onClick: (event) => {handleShowNewPlayerModal()}

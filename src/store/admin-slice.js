@@ -11,7 +11,7 @@ const adminSlice = createSlice({
         },
         saveAccount: {
             isLoading: false,
-            loadingError: ''
+            savingError: ''
         }
     },
     reducers: {
@@ -33,6 +33,7 @@ const adminSlice = createSlice({
 
         closeAddNewPlayerModal(state, action) {
             state.accounts.showAddNewPlayerModal = false
+            state.saveAccount.savingError = ''
         },
 
         openAddNewPlayerModal(state, action) {
@@ -41,17 +42,18 @@ const adminSlice = createSlice({
 
         saveAccountRequest(state, action) {
             state.saveAccount.isLoading = true
-            state.saveAccount.loadingError = ''
+            state.saveAccount.savingError = ''
         },
 
         saveAccountSuccess(state, action) {
             state.saveAccount.isLoading = false
-            state.saveAccount.loadingError = ''
+            state.saveAccount.savingError = ''
         },
 
         saveAccountFailure(state, action) {
             state.saveAccount.isLoading = false
-            state.saveAccount.loadingError = action.error
+            state.saveAccount.savingError = action.payload.error
+            state.accounts.showAddNewPlayerModal = true
         }
     }
 });
