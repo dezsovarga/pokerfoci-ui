@@ -1,7 +1,6 @@
-on:
-  push:
-    tags:
-      - '*'
+name: Pokerfoci-ui CI
+
+on: [push]
 
 jobs:
   build:
