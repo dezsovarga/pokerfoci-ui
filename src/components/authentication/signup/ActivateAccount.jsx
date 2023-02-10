@@ -53,6 +53,7 @@ const ActivateAccount = (props) => {
 
     useEffect(() => {
         activateAccount(confirmToken);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const SuccesfullyConfirmed = () => {

@@ -12,8 +12,7 @@ import { PlusCircle } from 'react-bootstrap-icons';
 const PlayersTable = () => {
 
     const dispatch = useDispatch();
-
-    const [selectedRow, setSelectedRow] = useState(null);
+    const [setSelectedRow] = useState(null);
     const {token} = useSelector(state => state.login);
 
     const columns = [
@@ -54,6 +53,7 @@ const PlayersTable = () => {
 
     useEffect(() => {
         loadAccounts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const defaultMaterialTheme = createTheme();

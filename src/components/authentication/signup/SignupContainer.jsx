@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import './SignupContainer.css';
 import { Link } from 'react-router-dom';
 import ConfirmSignup from './ConfirmSignup';
@@ -88,7 +88,7 @@ const SignupContainer = (props) => {
                     </div>        
                     <div className="form-group">
                         <label className="form-check-label"><input type="checkbox" required="required" /> 
-                        I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
+                        I accept the <a href="privacy-policy">Terms of Use</a> &amp; <a href="privacy-policy">Privacy Policy</a></label>
                     </div>
                     {/*TODO: add loading spinner*/}
                     {isLoading && <div>Loading...</div>}

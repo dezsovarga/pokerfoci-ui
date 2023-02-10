@@ -75,7 +75,7 @@ const LoginContainer = (props) => {
                 </div>
                 <div className="clearfix">
                     <label className="float-left form-check-label"><input type="checkbox" /> Remember me</label>
-                    <a href="#" className="float-right">Forgot Password?</a>
+                    <a href="forgot-password" className="float-right">Forgot Password?</a>
                 </div>
             </form>
             <p className="text-center">

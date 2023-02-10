@@ -31,7 +31,7 @@ const PokerfociApp = (props) => {
                 roles: roles
             }));
         }
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const isLoggedIn = useSelector(state => state.login.isLoggedIn)
