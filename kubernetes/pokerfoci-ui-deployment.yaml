@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: pokerfoci-ui
+  name: pokerfoci-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: pokerfoci-ui
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.network/pof-default: "true"
+        io.kompose.service: pokerfoci-ui
+    spec:
+      containers:
+        - image: dezsovargadev/pokerfoci-ui
+          name: pokerfoci-ui
+          ports:
+            - containerPort: 3000
+      restartPolicy: Always

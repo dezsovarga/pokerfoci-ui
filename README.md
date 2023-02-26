@@ -68,3 +68,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Build docker file
+
+docker build -t dezsovargadev/pokerfoci-ui .
+
+### Push docker file to dockerhub
+
+docker push dezsovargadev/pokerfoci-ui
+
+### Deploy to kubernetes
+
+docker push dezsovargadev/pokerfoci-ui
+kubectl apply -f pokerfoci-ui-deployment.yaml,pokerfoci-ui-service.yaml
