@@ -4,6 +4,7 @@ import './LoginContainer.css';
 import { loginActions } from '../../../store/login-slice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { API_URL} from "../../../Constants";
 
 const LoginContainer = (props) => {
 
@@ -22,7 +23,7 @@ const LoginContainer = (props) => {
         const password = passwordRef.current.value;
         const encoded = btoa(`${username}:${password}`);
 
-        const url = "http://localhost:8081/account/login"
+        const url = `${API_URL}/account/login`
         fetch(url, {
             method: 'POST',
             body: null,

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import {activateAccountActions} from "../../../store/account-activation-slice";
 import {loginActions} from "../../../store/login-slice";
 import {signupActions} from "../../../store/signup-slice";
+import { API_URL} from "../../../Constants";
 
 const ActivateAccount = (props) => {
 
@@ -24,7 +25,7 @@ const ActivateAccount = (props) => {
 
       dispatch(activateAccountActions.confirmRequest());
 
-      const response = await fetch(`http://localhost:8081/account/register/confirm/${confirmToken}`, {
+      const response = await fetch(`${API_URL}/account/register/confirm/${confirmToken}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'

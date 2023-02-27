@@ -5,6 +5,7 @@ import ConfirmSignup from './ConfirmSignup';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {signupActions} from "../../../store/signup-slice";
+import { API_URL} from "../../../Constants";
 
 const SignupContainer = (props) => {
 
@@ -43,7 +44,7 @@ const SignupContainer = (props) => {
     async function onSignupHandler(account) {
         dispatch(signupActions.signupRequest());
 
-        const response = await fetch('http://localhost:8081/account/register', {
+        const response = await fetch(`${API_URL}/account/register`, {
           method: 'POST',
           body: JSON.stringify(account),
           headers: {
