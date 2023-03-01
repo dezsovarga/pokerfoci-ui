@@ -7,6 +7,8 @@ import PokerfociApp from "../../PokerfociApp";
 import {loginActions} from "../../../store/login-slice";
 import server from "../../../mocks/server";
 import {rest} from "msw";
+import { API_URL} from "../../../Constants";
+
 
 const navigateToLoginPage = () => {
     const loginLink = screen.getByTestId('login-link');
@@ -74,7 +76,7 @@ describe('ConfirmSignup component', () => {
     test('clicking on activate account, but already verified', async () => {
 
         server.use(
-            rest.get('http://localhost:8081/account/register/confirm/:confirmToken', (req, res, ctx) => {
+            rest.get(`${API_URL}/account/register/confirm/:confirmToken`, (req, res, ctx) => {
                 return res(ctx.status(409), ctx.json(
                     {code: '409', reason: 'User already verified'}));
             })

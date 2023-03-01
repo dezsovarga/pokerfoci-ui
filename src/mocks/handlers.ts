@@ -1,7 +1,8 @@
 import { rest } from "msw";
+import { API_URL} from "../Constants";
 
 function login() {
-    return rest.post('http://localhost:8081/account/login', (req, res, ctx) => {
+    return rest.post(`${API_URL}/account/login`, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json(
@@ -15,7 +16,7 @@ function login() {
 }
 
 function signup() {
-    return rest.post('http://localhost:8081/account/register', (req, res, ctx) => {
+    return rest.post(`${API_URL}/account/register`, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json(
@@ -28,7 +29,7 @@ function signup() {
 }
 
 function activateAccount() {
-    return rest.get('http://localhost:8081/account/register/confirm/:confirmToken', (req, res, ctx) => {
+    return rest.get(`${API_URL}/account/register/confirm/:confirmToken`, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json(
@@ -42,7 +43,7 @@ function activateAccount() {
 }
 
 function changePassword() {
-    return rest.post('http://localhost:8081/account/change-password', (req, res, ctx) => {
+    return rest.post(`${API_URL}/account/change-password`, (req, res, ctx) => {
         return res(
             ctx.status(200),
         );
@@ -50,7 +51,7 @@ function changePassword() {
 }
 
 function loadAccountsForAdmin() {
-    return rest.get('http://localhost:8081/admin/accounts', (req, res, ctx) => {
+    return rest.get(`${API_URL}/admin/accounts`, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json(

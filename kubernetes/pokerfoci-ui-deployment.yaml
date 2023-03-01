@@ -19,6 +19,9 @@ spec:
       containers:
         - image: dezsovargadev/pokerfoci-ui
           name: pokerfoci-ui
+          env:
+            - name: API_URL
+              value: 'http://34.28.171.131:8081'
           ports:
             - containerPort: 3000
       restartPolicy: Always
