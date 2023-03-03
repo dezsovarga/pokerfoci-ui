@@ -71,13 +71,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Build docker file
 
-docker build -t dezsovargadev/pokerfoci-ui .
+docker build -t dezsovargadev/pokerfoci-ui:latest .
 
 ### Push docker file to dockerhub
 
-docker push dezsovargadev/pokerfoci-ui
+docker push dezsovargadev/pokerfoci-ui:latest
 
 ### Deploy to kubernetes
 
 docker push dezsovargadev/pokerfoci-ui
 kubectl apply -f pokerfoci-ui-deployment.yaml,pokerfoci-ui-service.yaml
+
+### Reduce cluster node size to 0
+
+gcloud container clusters resize --zone  us-central1-a pokerfoci-cluster --num-nodes=0
+
+### Increase cluster node size to 3
+
+gcloud container clusters resize --zone  us-central1-a pokerfoci-cluster --num-nodes=3

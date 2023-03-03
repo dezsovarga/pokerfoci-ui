@@ -30,7 +30,7 @@ const PlayersTable = () => {
     async function loadAccounts() {
         dispatch(adminActions.loadAccountsRequest());
 
-        const response = await fetch('http://localhost:8081/admin/accounts', {
+        const response = await fetch(`${REACT_APP_API_URL}/admin/accounts`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

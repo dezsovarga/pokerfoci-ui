@@ -62,7 +62,7 @@ describe ('PlayersTable component', () => {
     test('Renders players table with error', async () => {
 
         server.use(
-            rest.get('http://localhost:8081/admin/accounts', (req, res, ctx) => {
+            rest.get(`${REACT_APP_API_URL}/admin/accounts`, (req, res, ctx) => {
                 return res(ctx.status(500), ctx.json(
                     {status: '500', error: 'Internal Server Error'}));
             })

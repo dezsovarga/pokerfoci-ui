@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 import SignupContainer from "./SignupContainer";
 import { rest } from "msw";
 import server from "../../../mocks/server";
-import {API_URL} from "../../../Constants";
+import {REACT_APP_API_URL} from "../../../Constants";
 
 describe('SignupContainer component', () => {
 
@@ -51,7 +51,7 @@ describe('SignupContainer component', () => {
     test('submitting signup form responses with 409 Account already exists', async () => {
 
         server.use(
-            rest.post(`${API_URL}/account/register`, (req, res, ctx) => {
+            rest.post(`${REACT_APP_API_URL}/account/register`, (req, res, ctx) => {
                 return res(ctx.status(409), ctx.json({
                     code: '409',
                     reason: 'Account already exists!'

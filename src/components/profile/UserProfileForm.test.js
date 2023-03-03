@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import UserProfileForm from "./UserProfileForm";
 import server from "../../mocks/server";
 import {rest} from "msw";
-import {API_URL} from "../../Constants";
+import {REACT_APP_API_URL} from "../../Constants";
 
 const initialState = {
     login: {
@@ -53,7 +53,7 @@ describe('UserProfile component', () => {
     test('change password failed', async() => {
 
         server.use(
-            rest.post(`${API_URL}/account/change-password`, (req, res, ctx) => {
+            rest.post(`${REACT_APP_API_URL}/account/change-password`, (req, res, ctx) => {
                 return res(ctx.status(412), ctx.json(
                     {code: '409', reason: 'Invalid request. Authorization failed for changing password'}));
             })

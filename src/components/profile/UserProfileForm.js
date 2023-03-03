@@ -23,7 +23,7 @@ const UserProfileForm = (props) => {
         //TODO: add validation
         dispatch(profileActions.changePasswordRequest());
 
-        fetch("http://localhost:8081/account/change-password", {
+        fetch(`${REACT_APP_API_URL}/account/change-password`, {
             method: 'POST',
             body: JSON.stringify({
                 email: username,

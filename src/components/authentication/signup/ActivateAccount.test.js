@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import ConfirmSignup from "./ConfirmSignup";
 import server from "../../../mocks/server";
 import {rest} from "msw";
-import {API_URL} from "../../../Constants";
+import {REACT_APP_API_URL} from "../../../Constants";
 
 const initialState = {
     login: {
@@ -40,7 +40,7 @@ describe('ActivateAccount component', () => {
 
     test('renders ActivateAccount', async() => {
         server.use(
-            rest.get(`${API_URL}/account/register/confirm/:confirmToken`, (req, res, ctx) => {
+            rest.get(`${REACT_APP_API_URL}/account/register/confirm/:confirmToken`, (req, res, ctx) => {
                 return res(ctx.status(409), ctx.json(
                     {code: '409', reason: 'User already verified'}));
             })

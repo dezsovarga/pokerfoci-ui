@@ -49,7 +49,7 @@ const NewPlayerModal = (props) => {
     async function onSaveAccountHandler(accountDto) {
         dispatch(adminActions.saveAccountRequest());
 
-        const response = await fetch('http://localhost:8081/admin/account', {
+        const response = await fetch(`${REACT_APP_API_URL}/admin/account`, {
             method: 'POST',
             body: JSON.stringify(accountDto),
             headers: {
