@@ -4,6 +4,7 @@ import {screen} from "@testing-library/react";
 import server from "../../mocks/server";
 import {rest} from "msw";
 import userEvent from "@testing-library/user-event";
+import {API_URL} from "../../Constants";
 
 const initialState = {
     login: {
@@ -62,7 +63,7 @@ describe ('PlayersTable component', () => {
     test('Renders players table with error', async () => {
 
         server.use(
-            rest.get(`${REACT_APP_API_URL}/admin/accounts`, (req, res, ctx) => {
+            rest.get(`${API_URL}/admin/accounts`, (req, res, ctx) => {
                 return res(ctx.status(500), ctx.json(
                     {status: '500', error: 'Internal Server Error'}));
             })

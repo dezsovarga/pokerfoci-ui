@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {adminActions} from "../../store/admin-slice";
 import NewPlayerModal from "./NewPlayerModal";
 import { PlusCircle } from 'react-bootstrap-icons';
+import {API_URL} from "../../Constants";
 
 const PlayersTable = () => {
 
@@ -30,7 +31,7 @@ const PlayersTable = () => {
     async function loadAccounts() {
         dispatch(adminActions.loadAccountsRequest());
 
-        const response = await fetch(`${REACT_APP_API_URL}/admin/accounts`, {
+        const response = await fetch(`${API_URL}/admin/accounts`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

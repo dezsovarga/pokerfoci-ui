@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {profileActions} from "../../store/profile-slice";
+import {API_URL} from "../../Constants";
 
 const UserProfileForm = (props) => {
 
@@ -23,7 +24,7 @@ const UserProfileForm = (props) => {
         //TODO: add validation
         dispatch(profileActions.changePasswordRequest());
 
-        fetch(`${REACT_APP_API_URL}/account/change-password`, {
+        fetch(`${API_URL}/account/change-password`, {
             method: 'POST',
             body: JSON.stringify({
                 email: username,

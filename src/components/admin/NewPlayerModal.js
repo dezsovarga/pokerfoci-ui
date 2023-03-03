@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {adminActions} from "../../store/admin-slice";
 import { useRef } from 'react';
 import classes from "./NewPlayerModal.module.css";
+import {API_URL} from "../../Constants";
 
 const NewPlayerModal = (props) => {
 
@@ -49,7 +50,7 @@ const NewPlayerModal = (props) => {
     async function onSaveAccountHandler(accountDto) {
         dispatch(adminActions.saveAccountRequest());
 
-        const response = await fetch(`${REACT_APP_API_URL}/admin/account`, {
+        const response = await fetch(`${API_URL}/admin/account`, {
             method: 'POST',
             body: JSON.stringify(accountDto),
             headers: {
