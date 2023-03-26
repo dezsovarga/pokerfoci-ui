@@ -12,6 +12,10 @@ const adminSlice = createSlice({
         saveAccount: {
             isLoading: false,
             savingError: ''
+        },
+        updateAccount: {
+            isLoading: false,
+            updateError: ''
         }
     },
     reducers: {
@@ -54,7 +58,23 @@ const adminSlice = createSlice({
             state.saveAccount.isLoading = false
             state.saveAccount.savingError = action.payload.error
             state.accounts.showAddNewPlayerModal = true
-        }
+        },
+
+        updateAccountRequest(state, action) {
+            state.updateAccount.isLoading = true
+            state.updateAccount.updateError = ''
+        },
+
+        updateAccountSuccess(state, action) {
+            state.updateAccount.isLoading = false
+            state.updateAccount.updateError = ''
+            const foundIndex = state.accounts.accountData.findIndex(a => a.id === action.payload.data.id);
+            state.accounts.accountData[foundIndex] = action.payload.data;
+        },
+        updateAccountFailure(state, action) {
+            state.updateAccount.isLoading = false
+            state.updateAccount.updateError = action.payload.error
+        },
     }
 });
 

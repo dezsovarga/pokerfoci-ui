@@ -89,3 +89,13 @@ gcloud container clusters resize --zone  us-central1-a pokerfoci-cluster --num-n
 ### Increase cluster node size to 3
 
 gcloud container clusters resize --zone  us-central1-a pokerfoci-cluster --num-nodes=3
+
+### Check kubernetes configmap
+kubectl describe configmap/pokerfoci-config
+
+### Edit kubernetes configmap
+kubectl edit configmap/pokerfoci-config
+
+### Restart kubernetes pod
+kubectl scale deployment pokerfoci-ui --replicas=0
+kubectl scale deployment pokerfoci-ui --replicas=1

@@ -13,20 +13,54 @@ import {API_URL} from "../../Constants";
 const PlayersTable = () => {
 
     const dispatch = useDispatch();
-    const [setSelectedRow] = useState(null);
+    const [selectedRow, setSelectedRow] = useState(null);
     const {token} = useSelector(state => state.login);
 
     const columns = [
         { title: 'Name', field: 'username' },
         { title: 'Email', field: 'email' },
-        { title: 'isAdmin', field: 'admin', render: rowData => <Switch defaultChecked={rowData.admin} /> },
-        { title: 'isEnabled', field: 'active', render: rowData => <Switch defaultChecked={rowData.active} /> }
+        { title: 'isAdmin', field: 'admin', render: rowData => <Switch defaultChecked={rowData.isAdmin} onChange={(e) => updateAccountHandler(rowData, e)} /> },
+        { title: 'isEnabled', field: 'active', render: rowData => <Switch defaultChecked={rowData.isActive} /> }
     ];
     const isLoading = useSelector(state => state.admin.accounts.isLoading);
     const accounts = useSelector(state => state.admin.accounts.accountData);
     const loadingError = useSelector(state => state.admin.accounts.loadingError);
 
     const handleShowNewPlayerModal = () => dispatch(adminActions.openAddNewPlayerModal());
+
+    async function updateAccountHandler(rowData) {
+        console.log("is admin switch changed" + rowData)
+        dispatch(adminActions.updateAccountRequest());
+
+        const updateAccountDto = {
+            id: rowData.id,
+            isAdmin: !rowData.isAdmin
+        }
+
+        const response = await fetch(`${API_URL}/admin/account`, {
+            method: 'PUT',
+            body: JSON.stringify(updateAccountDto),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).catch((err) => {
+            dispatch(adminActions.updateAccountFailure({
+                error: err.message
+            }));
+        });
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(adminActions.updateAccountSuccess({data: data}));
+        }
+        if (!response.ok) {
+            const data = await response.json();
+            //TODO: add error feedback
+            dispatch(adminActions.updateAccountFailure({
+                error: data.reason
+            }));
+        }
+    }
 
     async function loadAccounts() {
         dispatch(adminActions.loadAccountsRequest());
