@@ -40,6 +40,10 @@ const initialState = {
         saveAccount: {
             isLoading: false,
             savingError: ''
+        },
+        updateAccount: {
+            isLoading: false,
+            updateError: ''
         }
     }
 }
@@ -93,5 +97,40 @@ describe ('PlayersTable component', () => {
 
         const addNewPlayerModalCloseButton = await screen.findByTestId('add-new-player-modal-close');
         expect(addNewPlayerModalCloseButton).toBeInTheDocument();
+    })
+
+    test('Clicking on the isAdmin switch, success message is shown saying the update was successful', async () => {
+
+        // Arrange
+        let {store} = renderWithProviders(<PlayersTable />, { preloadedState: initialState});
+
+        // Action
+        const isAdminSwitch = await screen.findByTestId('isAdminSwitch_1');
+        userEvent.click(isAdminSwitch);
+
+        // Assert
+        const switchAdminRoleSuccess = await screen.findByTestId('switch-admin-role-success');
+        expect(switchAdminRoleSuccess).toBeInTheDocument();
+    })
+
+    test('Clicking on the isAdmin switch, failure message is shown saying the update failed', async () => {
+
+        server.use(
+            rest.put(`${API_URL}/admin/account`, (req, res, ctx) => {
+                return res(ctx.status(500), ctx.json(
+                    {status: '500', error: 'Internal Server Error'}));
+            })
+        );
+
+        // Arrange
+        let {store} = renderWithProviders(<PlayersTable />, { preloadedState: initialState});
+
+        // Action
+        const isAdminSwitch = await screen.findByTestId('isAdminSwitch_1');
+        userEvent.click(isAdminSwitch);
+
+        // Assert
+        const switchAdminRoleFailure = await screen.findByTestId('switch-admin-role-failure');
+        expect(switchAdminRoleFailure).toBeInTheDocument();
     })
 })

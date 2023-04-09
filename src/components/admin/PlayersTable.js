@@ -9,17 +9,24 @@ import {adminActions} from "../../store/admin-slice";
 import NewPlayerModal from "./NewPlayerModal";
 import { PlusCircle } from 'react-bootstrap-icons';
 import {API_URL} from "../../Constants";
+import UpdateAccountFeedback from "./UpdateAccountFeedback";
 
 const PlayersTable = () => {
 
     const dispatch = useDispatch();
-    const [selectedRow, setSelectedRow] = useState(null);
     const {token} = useSelector(state => state.login);
+    const {updateError} = useSelector(state => state.admin.updateAccount);
+    const [showFeedbackMessage, setShowFeedbackMessage] = useState(null);
+
+    setTimeout(() => {
+        setShowFeedbackMessage(false);
+    }, 3000);
 
     const columns = [
         { title: 'Name', field: 'username' },
         { title: 'Email', field: 'email' },
-        { title: 'isAdmin', field: 'admin', render: rowData => <Switch defaultChecked={rowData.isAdmin} onChange={(e) => updateAccountHandler(rowData, e)} /> },
+        { title: 'isAdmin', field: 'admin',
+            render: rowData => <Switch defaultChecked={rowData.isAdmin} data-testid={`isAdminSwitch_${rowData.id}`} onClick={(e) => updateAccountHandler(rowData, e)} /> },
         { title: 'isEnabled', field: 'active', render: rowData => <Switch defaultChecked={rowData.isActive} /> }
     ];
     const isLoading = useSelector(state => state.admin.accounts.isLoading);
@@ -48,17 +55,20 @@ const PlayersTable = () => {
             dispatch(adminActions.updateAccountFailure({
                 error: err.message
             }));
+            setShowFeedbackMessage(true);
         });
         if (response.ok) {
             const data = await response.json();
             dispatch(adminActions.updateAccountSuccess({data: data}));
+            setShowFeedbackMessage(true);
         }
         if (!response.ok) {
             const data = await response.json();
             //TODO: add error feedback
             dispatch(adminActions.updateAccountFailure({
-                error: data.reason
+                error: data.reason || data.error
             }));
+            setShowFeedbackMessage(true);
         }
     }
 
@@ -102,9 +112,9 @@ const PlayersTable = () => {
                         data={accounts.map(o => ({ ...o }))}
                         enablePagination={false}
                         title='Players'
-                        onRowClick={(evt, selectedRow) =>
-                            setSelectedRow(selectedRow.tableData.id)
-                        }
+                        // onRowClick={(evt, selected_Row) =>
+                        //     setSelected_Row(selected_Row.tableData.id)
+                        // }
                         options={{
                             padding: "dense",
                             search: true
@@ -135,7 +145,7 @@ const PlayersTable = () => {
             {isLoading && <p>Loading...</p>}
             {!isLoading && !loadingError && <AdminAccountsTable></AdminAccountsTable>}
             <NewPlayerModal refreshAccounts={loadAccounts}/>
-
+            {showFeedbackMessage && <UpdateAccountFeedback success={!updateError}/>}
         </React.Fragment>
     );
 }
