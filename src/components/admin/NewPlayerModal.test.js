@@ -38,6 +38,10 @@ const initialState = {
         saveAccount: {
             isLoading: false,
             savingError: ''
+        },
+        updateAccount: {
+            isLoading: false,
+            updateError: ''
         }
     }
 }
