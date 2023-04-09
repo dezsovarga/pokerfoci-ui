@@ -26,8 +26,13 @@ const PlayersTable = () => {
         { title: 'Name', field: 'username' },
         { title: 'Email', field: 'email' },
         { title: 'isAdmin', field: 'admin',
-            render: rowData => <Switch defaultChecked={rowData.isAdmin} data-testid={`isAdminSwitch_${rowData.id}`} onClick={(e) => updateAccountHandler(rowData, e)} /> },
-        { title: 'isEnabled', field: 'active', render: rowData => <Switch defaultChecked={rowData.isActive} /> }
+            render: rowData => <Switch defaultChecked={rowData.isAdmin}
+                                       data-testid={`isAdminSwitch_${rowData.id}`}
+                                       onClick={(e) => updateAccountHandler({id: rowData.id, isAdmin: !rowData.isAdmin}, e)} /> },
+        { title: 'isEnabled', field: 'active',
+            render: rowData => <Switch defaultChecked={rowData.isActive}
+                                       data-testid={`isEnabledSwitch_${rowData.id}`}
+                                       onClick={(e) => updateAccountHandler({id: rowData.id, isActive: !rowData.isActive}, e)} /> }
     ];
     const isLoading = useSelector(state => state.admin.accounts.isLoading);
     const accounts = useSelector(state => state.admin.accounts.accountData);
@@ -36,12 +41,12 @@ const PlayersTable = () => {
     const handleShowNewPlayerModal = () => dispatch(adminActions.openAddNewPlayerModal());
 
     async function updateAccountHandler(rowData) {
-        console.log("is admin switch changed" + rowData)
         dispatch(adminActions.updateAccountRequest());
 
         const updateAccountDto = {
             id: rowData.id,
-            isAdmin: !rowData.isAdmin
+            isAdmin: rowData.isAdmin,
+            isActive: rowData.isActive
         }
 
         const response = await fetch(`${API_URL}/admin/account`, {

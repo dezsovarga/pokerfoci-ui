@@ -133,4 +133,18 @@ describe ('PlayersTable component', () => {
         const switchAdminRoleFailure = await screen.findByTestId('switch-admin-role-failure');
         expect(switchAdminRoleFailure).toBeInTheDocument();
     })
+
+    test('Clicking on the isEnabled switch, success message is shown saying the update was successful', async () => {
+
+        // Arrange
+        let {store} = renderWithProviders(<PlayersTable />, { preloadedState: initialState});
+
+        // Action
+        const isEnabledSwitch = await screen.findByTestId('isEnabledSwitch_1');
+        userEvent.click(isEnabledSwitch);
+
+        // Assert
+        const switchSuccess = await screen.findByTestId('switch-admin-role-success');
+        expect(switchSuccess).toBeInTheDocument();
+    })
 })
