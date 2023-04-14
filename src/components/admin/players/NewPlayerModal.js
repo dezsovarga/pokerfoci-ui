@@ -3,10 +3,10 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {useDispatch, useSelector} from "react-redux";
-import {adminActions} from "../../store/admin-slice";
+import {adminActions} from "../../../store/admin-slice";
 import { useRef } from 'react';
 import classes from "./NewPlayerModal.module.css";
-import {API_URL} from "../../Constants";
+import {API_URL} from "../../../Constants";
 
 const NewPlayerModal = (props) => {
 

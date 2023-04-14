@@ -1,10 +1,10 @@
-import {renderWithProviders} from "../../utils/test-utils";
+import {renderWithProviders} from "../../../utils/test-utils";
 import PlayersTable from "./PlayersTable";
 import {screen} from "@testing-library/react";
-import server from "../../mocks/server";
+import server from "../../../mocks/server";
 import {rest} from "msw";
 import userEvent from "@testing-library/user-event";
-import {API_URL} from "../../Constants";
+import {API_URL} from "../../../Constants";
 
 const initialState = {
     login: {

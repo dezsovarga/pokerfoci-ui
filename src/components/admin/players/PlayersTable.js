@@ -5,10 +5,10 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import classes from './PlayersTable.module.css';
 import Switch from '@mui/material/Switch';
 import {useDispatch, useSelector} from "react-redux";
-import {adminActions} from "../../store/admin-slice";
+import {adminActions} from "../../../store/admin-slice";
 import NewPlayerModal from "./NewPlayerModal";
 import { PlusCircle } from 'react-bootstrap-icons';
-import {API_URL} from "../../Constants";
+import {API_URL} from "../../../Constants";
 import UpdateAccountFeedback from "./UpdateAccountFeedback";
 
 const PlayersTable = () => {

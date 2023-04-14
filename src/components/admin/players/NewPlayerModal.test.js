@@ -1,4 +1,4 @@
-import {renderWithProviders} from "../../utils/test-utils";
+import {renderWithProviders} from "../../../utils/test-utils";
 import PlayersTable from "./PlayersTable";
 import {screen, fireEvent} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

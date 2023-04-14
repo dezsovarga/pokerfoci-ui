@@ -17,7 +17,7 @@ spec:
         io.kompose.service: pokerfoci-ui
     spec:
       containers:
-        - image: dezsovargadev/pokerfoci-ui:0.0.2
+        - image: dezsovargadev/pokerfoci-ui:0.0.3
           name: pokerfoci-ui
           env:
             - name: REACT_APP_API_URL
