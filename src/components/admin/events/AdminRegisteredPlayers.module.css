@@ -1,0 +1,17 @@
+.listWidth {
+    padding: 30px;
+    max-width: 400px;
+    text-align: center;
+}
+
+.loadingError {
+    color: red
+}
+
+.playerCard {
+    padding: 8px;
+    margin: 5px;
+    background-color: darkseagreen;
+    display:inline-block;
+
+}
