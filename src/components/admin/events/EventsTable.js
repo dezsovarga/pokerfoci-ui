@@ -5,14 +5,21 @@ import {PlusCircle} from "react-bootstrap-icons";
 import { event_data } from './event_data';
 import AdminRegisteredPlayers from "./AdminRegisteredPlayers";
 import classes from "./EventsTable.module.css";
+import {adminActions} from "../../../store/admin-slice";
+import {useDispatch} from "react-redux";
+import NewEventModal from "./NewEventModal";
 
 const EventsTable = () => {
+
+    const dispatch = useDispatch();
 
     const columns = [
         { title: 'Date', field: 'eventDate' },
         { title: 'Status', field: 'status'},
         { title: 'Score', field: 'score'}
     ];
+
+    const handleShowNewEventModal = () => dispatch(adminActions.openAddNewEventModal());
 
     const defaultMaterialTheme = createTheme();
 
@@ -41,10 +48,10 @@ const EventsTable = () => {
                         }}
                         actions={[
                             {
-                                icon: () => <PlusCircle data-testid='add-new-account'/>,
-                                tooltip: 'Add User',
+                                icon: () => <PlusCircle data-testid='add-new-event'/>,
+                                tooltip: 'Create new event',
                                 isFreeAction: true,
-                                onClick: (event) => {alert("TBD")}
+                                onClick: (event) => {handleShowNewEventModal()}
                             }
                         ]}
                     />
@@ -56,6 +63,7 @@ const EventsTable = () => {
     return (
         <React.Fragment>
             <AdminEventsTable></AdminEventsTable>
+            <NewEventModal></NewEventModal>
         </React.Fragment>
     )
 }
