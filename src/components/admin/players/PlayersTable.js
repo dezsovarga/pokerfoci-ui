@@ -11,7 +11,7 @@ import { PlusCircle } from 'react-bootstrap-icons';
 import {API_URL} from "../../../Constants";
 import UpdateAccountFeedback from "./UpdateAccountFeedback";
 
-const PlayersTable = () => {
+const PlayersTable = (props) => {
 
     const dispatch = useDispatch();
     const {token} = useSelector(state => state.login);
@@ -77,32 +77,8 @@ const PlayersTable = () => {
         }
     }
 
-    async function loadAccounts() {
-        dispatch(adminActions.loadAccountsRequest());
-
-        const response = await fetch(`${API_URL}/admin/accounts`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }).catch((err) => {
-            dispatch(adminActions.loadAccountsFailure({
-                loadingError: err.message
-            }));
-        });
-        const data = await response.json();
-        if (response.status !== 200) {
-            dispatch(adminActions.loadAccountsFailure({
-                loadingError: data.reason || data.error
-            }));
-        } else {
-            dispatch(adminActions.loadAccountsSuccess({data: data}));
-        }
-    }
-
     useEffect(() => {
-        loadAccounts();
+        props.loadAccounts();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -149,7 +125,7 @@ const PlayersTable = () => {
             <p className={classes.loadingError}>{loadingError}</p>
             {isLoading && <p>Loading...</p>}
             {!isLoading && !loadingError && <AdminAccountsTable></AdminAccountsTable>}
-            <NewPlayerModal refreshAccounts={loadAccounts}/>
+            <NewPlayerModal refreshAccounts={props.loadAccounts}/>
             {showFeedbackMessage && <UpdateAccountFeedback success={!updateError}/>}
         </React.Fragment>
     );

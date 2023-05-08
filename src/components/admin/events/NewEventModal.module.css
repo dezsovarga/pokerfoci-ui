@@ -1,0 +1,11 @@
+.playerList {
+    max-height: 300px;
+    overflow: auto;
+    text-align: center;
+    cursor: pointer;
+}
+
+.playerCheck {
+    width: 30px;
+    height: 30px;
+}

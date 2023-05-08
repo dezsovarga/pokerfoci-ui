@@ -9,7 +9,7 @@ import {adminActions} from "../../../store/admin-slice";
 import {useDispatch} from "react-redux";
 import NewEventModal from "./NewEventModal";
 
-const EventsTable = () => {
+const EventsTable = (props) => {
 
     const dispatch = useDispatch();
 
@@ -63,7 +63,7 @@ const EventsTable = () => {
     return (
         <React.Fragment>
             <AdminEventsTable></AdminEventsTable>
-            <NewEventModal></NewEventModal>
+            <NewEventModal loadAccounts={props.loadAccounts}></NewEventModal>
         </React.Fragment>
     )
 }

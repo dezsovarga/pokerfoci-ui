@@ -41,6 +41,16 @@ const adminSlice = createSlice({
             state.accounts.loadingError = action.payload.loadingError;
         },
 
+        //used for event creation
+        updateAccountSelection(state, action) {
+            state.accounts.accountData = state.accounts.accountData.map((obj, index) => {
+                if (action.payload.selectedIndex === index) {
+                    return {...obj, selected: !obj.selected};
+                }
+            return obj;
+            });
+        },
+
         closeAddNewPlayerModal(state, action) {
             state.accounts.showAddNewPlayerModal = false
             state.saveAccount.savingError = ''
