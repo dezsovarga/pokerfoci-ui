@@ -1,7 +1,7 @@
 import {renderWithProviders} from "../../../utils/test-utils";
-import PlayersTable from "./PlayersTable";
 import {screen, fireEvent} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import AdminBody from "../AdminBody";
 
 const initialState = {
     login: {
@@ -51,7 +51,7 @@ describe ('NewPlayerModal component', () => {
     test('Submitting NewPlayerModal with different password and confirmPassword', async () => {
 
         // Arrange
-        let {store} = renderWithProviders(<PlayersTable/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='players'/>, { preloadedState: initialState});
 
         // Assert
         const addNewPlayerModalTitle = await screen.findByText('Add new player');
@@ -74,7 +74,7 @@ describe ('NewPlayerModal component', () => {
     test('Submitting NewPlayerModal with correct data', async () => {
 
         // Arrange
-        let {store} = renderWithProviders(<PlayersTable/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='players'/>, { preloadedState: initialState});
 
         // Assert
         const addNewPlayerModalTitle = await screen.findByText('Add new player');

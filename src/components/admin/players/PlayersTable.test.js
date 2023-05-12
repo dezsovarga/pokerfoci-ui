@@ -1,10 +1,10 @@
 import {renderWithProviders} from "../../../utils/test-utils";
-import PlayersTable from "./PlayersTable";
 import {screen} from "@testing-library/react";
 import server from "../../../mocks/server";
 import {rest} from "msw";
 import userEvent from "@testing-library/user-event";
 import {API_URL} from "../../../Constants";
+import AdminBody from "../AdminBody";
 
 const initialState = {
     login: {
@@ -53,7 +53,7 @@ describe ('PlayersTable component', () => {
     test('Renders players table', async () => {
 
         // Arrange
-        let {store} = renderWithProviders(<PlayersTable/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='players'/>, { preloadedState: initialState});
 
         // Assert
         const adminPlayersTable = await screen.findByTestId('admin-players-table');
@@ -73,7 +73,7 @@ describe ('PlayersTable component', () => {
             })
         );
         // Arrange
-        let {store} = renderWithProviders(<PlayersTable/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='players'/>, { preloadedState: initialState});
 
         // Assert
 
@@ -84,7 +84,7 @@ describe ('PlayersTable component', () => {
     test('Clicking on the PLUS button, the  newPlayerModal is rendered', async () => {
 
         // Arrange
-        let {store} = renderWithProviders(<PlayersTable/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='players'/>, { preloadedState: initialState});
 
         // Action
         const addNewPlayerButton = await screen.findByTestId('add-new-account');
@@ -102,7 +102,7 @@ describe ('PlayersTable component', () => {
     test('Clicking on the isAdmin switch, success message is shown saying the update was successful', async () => {
 
         // Arrange
-        let {store} = renderWithProviders(<PlayersTable />, { preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='players'/>, { preloadedState: initialState});
 
         // Action
         const isAdminSwitch = await screen.findByTestId('isAdminSwitch_1');
@@ -123,7 +123,7 @@ describe ('PlayersTable component', () => {
         );
 
         // Arrange
-        let {store} = renderWithProviders(<PlayersTable />, { preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='players'/>, { preloadedState: initialState});
 
         // Action
         const isAdminSwitch = await screen.findByTestId('isAdminSwitch_1');
@@ -137,7 +137,7 @@ describe ('PlayersTable component', () => {
     test('Clicking on the isEnabled switch, success message is shown saying the update was successful', async () => {
 
         // Arrange
-        let {store} = renderWithProviders(<PlayersTable />, { preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='players'/>, { preloadedState: initialState});
 
         // Action
         const isEnabledSwitch = await screen.findByTestId('isEnabledSwitch_1');

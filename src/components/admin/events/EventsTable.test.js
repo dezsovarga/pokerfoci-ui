@@ -1,7 +1,7 @@
 import {renderWithProviders} from "../../../utils/test-utils";
-import EventsTable from "../events/EventsTable";
 import {screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import AdminBody from "../AdminBody";
 
 const initialState = {
     login: {
@@ -31,7 +31,7 @@ describe ('EventsTable component', () => {
     test('Renders events table', async () => {
 
         // Arrange
-        let {store} = renderWithProviders(<EventsTable/>, {preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='events'/>, {preloadedState: initialState});
 
         // Assert
         const adminEventsTable = await screen.findByTestId('admin-events-table');
@@ -43,7 +43,7 @@ describe ('EventsTable component', () => {
     test('Clicking on the PLUS button, the  newEventModal is rendered', async () => {
 
         // Arrange
-        let {store} = renderWithProviders(<EventsTable/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<AdminBody section='events'/>, { preloadedState: initialState});
 
         // Action
         const addNewEventButton = await screen.findByTestId('add-new-event');
