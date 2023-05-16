@@ -19,6 +19,10 @@ const adminSlice = createSlice({
             isLoading: false,
             savingError: ''
         },
+        saveEvent: {
+            isLoading: false,
+            savingError: ''
+        },
         updateAccount: {
             isLoading: false,
             updateError: ''
@@ -61,7 +65,7 @@ const adminSlice = createSlice({
         },
         closeAddNewEventModal(state, action) {
             state.events.showAddNewEventModal = false
-            // state.saveAccount.savingError = ''
+            state.saveEvent.savingError = ''
         },
 
         openAddNewEventModal(state, action) {
@@ -82,6 +86,22 @@ const adminSlice = createSlice({
             state.saveAccount.isLoading = false
             state.saveAccount.savingError = action.payload.error
             state.accounts.showAddNewPlayerModal = true
+        },
+
+        saveEventRequest(state, action) {
+            state.saveEvent.isLoading = true
+            state.saveEvent.savingError = ''
+        },
+
+        saveEventSuccess(state, action) {
+            state.saveEvent.isLoading = false
+            state.saveEvent.savingError = ''
+        },
+
+        saveEventFailure(state, action) {
+            state.saveEvent.isLoading = false
+            state.saveEvent.savingError = action.payload.error
+            state.saveEvent.showAddNewEventModal = true
         },
 
         updateAccountRequest(state, action) {

@@ -9,18 +9,21 @@ import Form from "react-bootstrap/Form";
 import ListGroup from 'react-bootstrap/ListGroup';
 import classes from "./NewEventModal.module.css";
 import {Circle, CheckCircle} from 'react-bootstrap-icons';
-
+import {API_URL} from "../../../Constants";
 
 const NewEventModal = (props) => {
 
     const dispatch = useDispatch();
     const showModal = useSelector(state => state.admin.events.showAddNewEventModal);
-    // const token = useSelector(state => state.login.token);
+    const token = useSelector(state => state.login.token);
     const [selectedDate, setSelectedDate] = useState(null);
 
     // const isLoadingAccounts = useSelector(state => state.admin.accounts.isLoading);
     const accounts = useSelector(state => state.admin.accounts.accountData);
     // const accountsLoadingError = useSelector(state => state.admin.accounts.loadingError);
+
+    const saveEventsError = useSelector(state => state.admin.saveEvent.savingError);
+    const saveEventsLoading = useSelector(state => state.admin.saveEvent.isLoading);
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -33,7 +36,44 @@ const NewEventModal = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        alert("submit")
+        let selectedUsernames = accounts.filter(account => account.selected).map(a => a.username);
+        const createEventDto = {
+            eventDateEpoch: selectedDate.getTime(),
+            registeredPlayers: selectedUsernames,
+        }
+
+        onSaveEventHandler(createEventDto);
+    }
+
+    async function onSaveEventHandler(createEventDto) {
+        dispatch(adminActions.saveEventRequest());
+
+        const response = await fetch(`${API_URL}/admin/event`, {
+            method: 'POST',
+            body: JSON.stringify(createEventDto),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).catch((err) => {
+            dispatch(adminActions.saveEventFailure({
+                error: err.message
+            }));
+        });
+        if (response.ok) {
+            // const data = await response.json();
+            dispatch(adminActions.saveEventSuccess());
+            dispatch(adminActions.closeAddNewEventModal());
+            props.refreshAccounts();
+
+        }
+        if (!response.ok) {
+            const data = await response.json();
+            //TODO: add error feedback
+            dispatch(adminActions.saveEventFailure({
+                error: data.reason || data.error
+            }));
+        }
     }
 
     const updatePlayerSelection = (selectedIndex) => {
@@ -89,7 +129,10 @@ const NewEventModal = (props) => {
                         <Form.Label>Select players</Form.Label>
                         {allPayersList()}
                     </Form.Group>
-
+                    <div>
+                        <p className={classes.error}>{saveEventsError}</p>
+                        {saveEventsLoading && <div>Loading...</div>}
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose} data-testid='add-new-event-modal-close'>
