@@ -22,7 +22,11 @@ const initialState = {
             isLoading: false,
             loadingError: '',
             showAddNewEventModal: false
-        }
+        },
+        saveEvent: {
+            isLoading: false,
+            savingError: ''
+        },
     }
 }
 

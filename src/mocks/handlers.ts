@@ -88,4 +88,21 @@ function updateAccount() {
     });
 }
 
-export const handlers = [login(), signup(), activateAccount(), changePassword(), loadAccountsForAdmin(), updateAccount()];
+function addAccount() {
+    return rest.post(`${API_URL}/admin/account`, (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json(
+                [{
+                    id: 1,
+                    email: 'email@mail.com',
+                    isAdmin: false,
+                    isActive: true,
+                    skill: 60,
+                    username: 'username'
+                }])
+        );
+    });
+}
+
+export const handlers = [login(), signup(), activateAccount(), changePassword(), loadAccountsForAdmin(), updateAccount(), addAccount()];

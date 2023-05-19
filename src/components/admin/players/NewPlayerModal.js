@@ -88,17 +88,20 @@ const NewPlayerModal = (props) => {
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicUsername">
                             <Form.Label>Username</Form.Label>
-                            <Form.Control required type="text" placeholder="Username" ref={userNameRef}/>
+                            <Form.Control required type="text" placeholder="Username" ref={userNameRef}
+                                          data-testid= "username-input"/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicSkill">
                             <Form.Label>Skill</Form.Label>
-                            <Form.Control required type="text" placeholder="Skill" ref={skillRef}/>
+                            <Form.Control required type="text" placeholder="Skill" ref={skillRef}
+                                          data-testid= "skill-input"/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control required type="email" placeholder="Email" ref={emailRef}/>
+                            <Form.Control required type="email" placeholder="Email" ref={emailRef}
+                                          data-testid= "email-input"/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">

@@ -36,6 +36,12 @@ const NewEventModal = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        if (selectedDate === null) {
+            dispatch(adminActions.saveEventFailure({
+                error: 'You need to provide a valid event date'
+            }));
+        }
+
         let selectedUsernames = accounts.filter(account => account.selected).map(a => a.username);
         const createEventDto = {
             eventDateEpoch: selectedDate.getTime(),

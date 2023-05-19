@@ -1,5 +1,5 @@
 import {renderWithProviders} from "../../../utils/test-utils";
-import {screen, fireEvent} from "@testing-library/react";
+import {screen, fireEvent, waitForElementToBeRemoved} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AdminBody from "../AdminBody";
 
@@ -68,6 +68,7 @@ describe ('NewPlayerModal component', () => {
 
         const passwordValidationError = await screen.findByText('Password and confirmPassword should match');
         expect(passwordValidationError).toBeInTheDocument();
+        expect(store.getState().admin.saveAccount.savingError).toBe("Password and confirmPassword should match")
 
     })
 
@@ -80,7 +81,30 @@ describe ('NewPlayerModal component', () => {
         const addNewPlayerModalTitle = await screen.findByText('Add new player');
         expect(addNewPlayerModalTitle).toBeInTheDocument();
 
-        //TODO: implement test
+        const usernameInput = screen.getByTestId('username-input');
+        fireEvent.change(usernameInput, {target: {value: 'testUser'}})
+
+        const skillInput = screen.getByTestId('skill-input');
+        fireEvent.change(skillInput, {target: {value: '60'}})
+
+        const emailInput = screen.getByTestId('email-input');
+        fireEvent.change(emailInput, {target: {value: 'test@email.com'}})
+
+        const passwordInput = screen.getByTestId('password-input');
+        fireEvent.change(passwordInput, {target: {value: 'password'}})
+
+        const confirmPasswordInput = screen.getByTestId('confirm-password-input');
+        fireEvent.change(confirmPasswordInput, {target: {value: 'password'}})
+
+        const addNewPlayerSubmit = await screen.findByTestId('new-player-submit-button');
+        userEvent.click(addNewPlayerSubmit);
+
+        await waitForElementToBeRemoved(() => screen.queryByTestId('add-new-player-modal'))
+
+        const addNewPlayerModal = screen.queryByTestId('add-new-player-modal');
+        expect(addNewPlayerModal).toBeNull();
+
+        expect(store.getState().admin.saveAccount.savingError).toBe("");
 
     })
 })
