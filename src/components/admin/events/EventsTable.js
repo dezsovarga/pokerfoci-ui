@@ -1,20 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {createTheme, ThemeProvider} from "@mui/material";
 import MaterialTable from "material-table";
 import {PlusCircle} from "react-bootstrap-icons";
-import { event_data } from './event_data';
 import AdminRegisteredPlayers from "./AdminRegisteredPlayers";
 import classes from "./EventsTable.module.css";
 import {adminActions} from "../../../store/admin-slice";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import NewEventModal from "./NewEventModal";
 
 const EventsTable = (props) => {
 
     const dispatch = useDispatch();
 
+    const isLoadingEvents = useSelector(state => state.admin.events.isLoading);
+    const events = useSelector(state => state.admin.events.eventsData);
+    const loadingEventsError = useSelector(state => state.admin.events.loadingError);
+
     const columns = [
-        { title: 'Date', field: 'eventDate' },
+        { title: 'Date', field: 'eventDateTime' },
         { title: 'Status', field: 'status'},
         { title: 'Score', field: 'score'}
     ];
@@ -23,13 +26,18 @@ const EventsTable = (props) => {
 
     const defaultMaterialTheme = createTheme();
 
+    useEffect(() => {
+        props.loadEvents();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const AdminEventsTable = () => {
         return (
             <section className={classes.tableWidth} data-testid='admin-events-table'>
                 <ThemeProvider theme={defaultMaterialTheme}>
                     <MaterialTable
                         columns={columns}
-                        data={event_data}
+                        data={events.map(o => ({ ...o }))}
                         enablePagination={false}
                         title='Events'
                         detailPanel={rowData => {
@@ -62,8 +70,8 @@ const EventsTable = (props) => {
 
     return (
         <React.Fragment>
-            <AdminEventsTable></AdminEventsTable>
-            <NewEventModal loadAccounts={props.loadAccounts}></NewEventModal>
+            <AdminEventsTable loadEvents={props.loadEvents}></AdminEventsTable>
+            <NewEventModal loadAccounts={props.loadAccounts} loadEvents={props.loadEvents}></NewEventModal>
         </React.Fragment>
     )
 }

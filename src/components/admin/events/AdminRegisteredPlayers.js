@@ -7,15 +7,12 @@ const AdminRegisteredPlayers = (props) => {
     const playerCard = (player) => {
         return (
             <span>
-                {player}
+                {player.username}
             </span>
         )
     }
-    // const registeredPlayerList = props.registeredPlayers.map((player, index) =>
-    //     <span>{playerCard(player, index+1)}</span>
-    // );
     const registeredPlayerList = props.registeredPlayers.map((player, index) =>
-        <tr>
+        <tr key={index+1}>
             <td>{index+1}</td>
             <td>{playerCard(player)}</td>
         </tr>

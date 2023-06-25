@@ -34,11 +34,34 @@ const AdminBody = (props) => {
         }
     }
 
+    async function loadEvents() {
+        dispatch(adminActions.loadEventsRequest());
+
+        const response = await fetch(`${API_URL}/admin/events`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).catch((err) => {
+            dispatch(adminActions.loadEventsFailure({
+                loadingError: err.message
+            }));
+        });
+        const data = await response.json();
+        if (response.status !== 200) {
+            dispatch(adminActions.loadEventsFailure({
+                loadingError: data.reason || data.error
+            }));
+        } else {
+            dispatch(adminActions.loadEventsSuccess({data: data}));
+        }
+    }
+
     return (
         <div >
+            {props.section==='events' && <EventsTable loadAccounts={loadAccounts} loadEvents={loadEvents}></EventsTable>}
             {props.section==='players' && <PlayersTable loadAccounts={loadAccounts}></PlayersTable>}
-            {props.section==='events' && <EventsTable loadAccounts={loadAccounts}></EventsTable>}
-
         </div>
     )
 }

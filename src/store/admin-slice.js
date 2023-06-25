@@ -119,6 +119,22 @@ const adminSlice = createSlice({
             state.updateAccount.isLoading = false
             state.updateAccount.updateError = action.payload.error
         },
+
+        loadEventsRequest(state) {
+            state.events.isLoading = true;
+            state.events.loadingError = '';
+        },
+
+        loadEventsSuccess(state, action) {
+            state.events.isLoading = false;
+            state.events.loadingError = '';
+            state.events.eventsData = action.payload.data
+        },
+
+        loadEventsFailure(state, action) {
+            state.events.isLoading = false;
+            state.events.loadingError = action.payload.loadingError;
+        },
     }
 });
 

@@ -50,7 +50,7 @@ const PokerfociApp = (props) => {
                         {isLoggedIn && <Route path="/statistics" element={<Statistics/>}/> }
                         {isLoggedIn && <Route path="/skills" element={<Skills/>}/> }
                         {isLoggedIn && <Route path="/user-profile" element={<UserProfile/>}/> }
-                        {isLoggedIn && isUserAdmin && <Route path="/admin-page" element={<AdminPage section='players'/>}/> }
+                        {isLoggedIn && isUserAdmin && <Route path="/admin-page" element={<AdminPage section='events'/>}/> }
                         {isLoggedIn && isUserAdmin && <Route path="/admin-page/players" element={<AdminPage section='players' />}/> }
                         {isLoggedIn && isUserAdmin && <Route path="/admin-page/events" element={<AdminPage section='events' />}/> }
 

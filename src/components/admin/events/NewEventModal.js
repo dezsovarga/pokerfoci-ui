@@ -70,7 +70,7 @@ const NewEventModal = (props) => {
             // const data = await response.json();
             dispatch(adminActions.saveEventSuccess());
             dispatch(adminActions.closeAddNewEventModal());
-            props.refreshAccounts();
+            props.loadEvents();
 
         }
         if (!response.ok) {
