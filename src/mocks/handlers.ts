@@ -105,4 +105,33 @@ function addAccount() {
     });
 }
 
-export const handlers = [login(), signup(), activateAccount(), changePassword(), loadAccountsForAdmin(), updateAccount(), addAccount()];
+function loadEventsForAdmin() {
+    return rest.get(`${API_URL}/admin/events`, (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json(
+                [{
+                    id: 1,
+                    eventDateTime: "2023-06-29T00:00:00",
+                    registeredPlayers: [
+                        {username: "szury", skill: 60},
+                        {username: "dezsovarga", skill: 70}
+                    ],
+                    score: null,
+                    status: "INITIATED",
+                },
+                    {
+                        id: 1,
+                        eventDateTime: "2023-06-29T00:00:00",
+                        registeredPlayers: [
+                            {username: "szury", skill: 60},
+                            {username: "csabesz", skill: 80}
+                        ],
+                        score: null,
+                        status: "INITIATED",
+                    },])
+        );
+    });
+}
+
+export const handlers = [login(), signup(), activateAccount(), changePassword(), loadAccountsForAdmin(), updateAccount(), addAccount(), loadEventsForAdmin()];
