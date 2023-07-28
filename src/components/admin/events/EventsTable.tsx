@@ -12,9 +12,9 @@ const EventsTable = (props) => {
 
     const dispatch = useDispatch();
 
-    const isLoadingEvents = useSelector(state => state.admin.events.isLoading);
+    // const isLoadingEvents = useSelector(state => state.admin.events.isLoading);
     const events = useSelector(state => state.admin.events.eventsData);
-    const loadingEventsError = useSelector(state => state.admin.events.loadingError);
+    // const loadingEventsError = useSelector(state => state.admin.events.loadingError);
 
     const columns = [
         { title: 'Date', field: 'eventDateTime' },
