@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import LoginContainer from './authentication/login/LoginContainer.jsx'
-import SignupContainer from './authentication/signup/SignupContainer.jsx'
-import ActivateAccount from './authentication/signup/ActivateAccount.jsx'
-import Header from './home/Header.jsx'
-import Home from './home/Home.jsx'
-import Statistics from './home/Statistics.jsx'
+import LoginContainer from './authentication/login/LoginContainer.tsx'
+import SignupContainer from './authentication/signup/SignupContainer.tsx'
+import ActivateAccount from './authentication/signup/ActivateAccount.tsx'
+import Header from './home/Header.tsx'
+import Home from './home/Home.tsx'
+import Statistics from './home/Statistics.tsx'
 import Skills from "./home/Skills";
 import UserProfile from "./profile/UserProfile";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import AdminPage from './admin/AdminPage.jsx';
+import AdminPage from './admin/AdminPage.tsx';
 
 import {loginActions} from "../store/login-slice";
 
