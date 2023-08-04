@@ -10,10 +10,10 @@ import { API_URL} from "../../../Constants";
 const SignupContainer = (props) => {
 
     const dispatch = useDispatch();
-    const userNameRef = useRef('');
-    const emailRef = useRef('');
-    const passwordRef = useRef('');
-    const confirmPasswordRef = useRef('');
+    const userNameRef = useRef<HTMLInputElement | null>(null);
+    const emailRef = useRef<HTMLInputElement | null>(null);
+    const passwordRef = useRef<HTMLInputElement | null>(null);
+    const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
     const signupSuccessful = useSelector(state => state.signup.signupSuccessful)
     const confirmToken = useSelector(state => state.signup.confirmToken)
@@ -24,10 +24,10 @@ const SignupContainer = (props) => {
         event.preventDefault();
 
         const accountDto = {
-            username: userNameRef.current.value,
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
-            confirmPassword: confirmPasswordRef.current.value
+            username: userNameRef.current?.value,
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value,
+            confirmPassword: confirmPasswordRef.current?.value
         }
         if (accountDto.password !== accountDto.confirmPassword) {
             dispatch(signupActions.signupFailure({

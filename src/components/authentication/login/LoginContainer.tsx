@@ -10,8 +10,8 @@ const LoginContainer = (props) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const emailRef = useRef('');
-    const passwordRef = useRef('');
+    const emailRef = useRef<HTMLInputElement | null>(null);
+    const passwordRef = useRef<HTMLInputElement | null>(null);
     const isLoading = useSelector(state => state.login.isLoading);
     const authError = useSelector(state => state.login.authError);
 
@@ -19,14 +19,14 @@ const LoginContainer = (props) => {
         event.preventDefault();
 
         dispatch(loginActions.loginRequest());
-        const username = emailRef.current.value;
-        const password = passwordRef.current.value;
+        const username = emailRef.current?.value;
+        const password = passwordRef.current?.value;
         const encoded = btoa(`${username}:${password}`);
 
         const url = `${API_URL}/account/login`
         fetch(url, {
             method: 'POST',
-            body: null,
+            body: '',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Basic ${encoded}`
