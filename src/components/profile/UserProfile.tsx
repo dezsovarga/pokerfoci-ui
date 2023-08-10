@@ -9,7 +9,7 @@ const UserProfile = (props) => {
     const username = useSelector(state => state.login.username)
 
     return (
-        <section className={classes.starting}>
+        <section>
             <img className={classes.avatarIcon} alt="avatar-icon" src={avatarIcon} data-testid='avatar-icon'/>
             <h3 data-testid='logged-in-username'>{username}</h3>
             <UserProfileForm />

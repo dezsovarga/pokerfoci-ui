@@ -16,7 +16,7 @@ const PlayersTable = (props) => {
     const dispatch = useDispatch();
     const {token} = useSelector(state => state.login);
     const {updateError} = useSelector(state => state.admin.updateAccount);
-    const [showFeedbackMessage, setShowFeedbackMessage] = useState(null);
+    const [showFeedbackMessage, setShowFeedbackMessage] = useState(false);
 
     setTimeout(() => {
         setShowFeedbackMessage(false);
@@ -40,7 +40,7 @@ const PlayersTable = (props) => {
 
     const handleShowNewPlayerModal = () => dispatch(adminActions.openAddNewPlayerModal());
 
-    async function updateAccountHandler(rowData) {
+    async function updateAccountHandler(rowData, event) {
         dispatch(adminActions.updateAccountRequest());
 
         const updateAccountDto = {

@@ -1,0 +1,18 @@
+.willPlay {
+    margin: 10px;
+    background: lightgreen;
+}
+
+.willNotPlay {
+    margin: 10px;
+    background-color: indianred;
+}
+
+.registeredPlayerAvatarIcon {
+    width: 35px;
+    margin-right: 10px;
+}
+
+.playerNameAlign {
+    text-align: left;
+}

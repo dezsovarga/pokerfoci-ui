@@ -4,8 +4,13 @@ import React from "react";
 import {adminActions} from "../../store/admin-slice";
 import {API_URL} from "../../Constants";
 import {useDispatch, useSelector} from "react-redux";
+import Account from "../../models/Account";
 
-const AdminBody = (props) => {
+type AdminBodyProps = {
+    section: string
+}
+
+const AdminBody: React.FC<AdminBodyProps> = (props) => {
 
     const dispatch = useDispatch();
     const {token} = useSelector(state => state.login);
@@ -60,7 +65,7 @@ const AdminBody = (props) => {
 
     return (
         <div >
-            {props.section==='events' && <EventsTable loadAccounts={loadAccounts} loadEvents={loadEvents}></EventsTable>}
+            {props.section ==='events' && <EventsTable loadAccounts={loadAccounts} loadEvents={loadEvents}></EventsTable>}
             {props.section==='players' && <PlayersTable loadAccounts={loadAccounts}></PlayersTable>}
         </div>
     )

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import {loginActions} from "../../store/login-slice";
 
-const Header = (props) => {
+const Header: React.FC = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

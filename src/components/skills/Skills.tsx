@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Home.module.css';
+import classes from '../home/Home.module.css';
 
 const Skills = (props) => {
 

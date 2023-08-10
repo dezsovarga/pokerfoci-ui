@@ -8,7 +8,7 @@ import {adminActions} from "../../../store/admin-slice";
 import {useDispatch, useSelector} from "react-redux";
 import NewEventModal from "./NewEventModal";
 
-const EventsTable = (props) => {
+const EventsTable: React.FC<{ loadEvents: () => void; loadAccounts: () => void}> = (props) => {
 
     const dispatch = useDispatch();
 

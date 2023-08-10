@@ -3,10 +3,10 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import LoginContainer from './authentication/login/LoginContainer.tsx'
 import SignupContainer from './authentication/signup/SignupContainer.tsx'
 import ActivateAccount from './authentication/signup/ActivateAccount.tsx'
-import Header from './home/Header.tsx'
+import Header from './header/Header.tsx'
 import Home from './home/Home.tsx'
-import Statistics from './home/Statistics.tsx'
-import Skills from "./home/Skills";
+import Statistics from './statistics/Statistics.tsx'
+import Skills from "./skills/Skills";
 import UserProfile from "./profile/UserProfile";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';

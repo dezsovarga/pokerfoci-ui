@@ -3,6 +3,17 @@
     text-align: center;
   }
   
-  .starting h1 {
+.starting h1 {
     font-size: 5rem;
-  }
+}
+
+.registeredPlayersHeader {
+    background-color: cornflowerblue;
+}
+
+.mainContainer {
+    max-width: 1200px;
+    border: 1px black;
+    background-color: whitesmoke;
+}
+
