@@ -4,7 +4,6 @@ import React from "react";
 import {adminActions} from "../../store/admin-slice";
 import {API_URL} from "../../Constants";
 import {useDispatch, useSelector} from "react-redux";
-import Account from "../../models/Account";
 
 type AdminBodyProps = {
     section: string
