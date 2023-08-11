@@ -106,7 +106,7 @@ function addAccount() {
 }
 
 function loadEventsForAdmin() {
-    return rest.get(`${API_URL}/admin/events`, (req, res, ctx) => {
+    return rest.get(`${API_URL}/event/events`, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json(

@@ -1,8 +1,10 @@
 import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import PlayerView from "./PlayerView";
+import Button from "react-bootstrap/Button";
+import classes from './Home.module.css';
 
-const RegisteredPlayers: React.FC = (props) => {
+const EventRegistrationWidget: React.FC = (props) => {
 
     const playerData: Array<string> = ['dezsovarga', 'vinitor', 'csabesz',
         'horvathbotond', 'horvathkuki', 'szury', 'orban', 'kuplung', 'miklos', 'alin', 'szlo', 'atarr', 'tibi', 'calin']
@@ -21,8 +23,9 @@ const RegisteredPlayers: React.FC = (props) => {
     return (
         <Container>
             {registeredPlayers(playerData)}
+            <Button className={classes.registerButton} variant="primary">Register Now</Button>
         </Container>
     )
 }
 
-export default RegisteredPlayers;
+export default EventRegistrationWidget;

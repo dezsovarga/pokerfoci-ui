@@ -41,7 +41,7 @@ const AdminBody: React.FC<AdminBodyProps> = (props) => {
     async function loadEvents() {
         dispatch(adminActions.loadEventsRequest());
 
-        const response = await fetch(`${API_URL}/admin/events`, {
+        const response = await fetch(`${API_URL}/event/events`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

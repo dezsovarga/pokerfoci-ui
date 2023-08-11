@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Home.module.css';
 import {Card, Col, Container, Row} from "react-bootstrap";
-import RegisteredPlayers from "./RegisteredPlayers";
+import EventRegistrationWidget from "./EventRegistrationWidget";
 
 const Home: React.FC = () => {
 
@@ -19,7 +19,7 @@ const Home: React.FC = () => {
                             </Card.Header>
                             <Card.Body >
                                 <Card.Text>
-                                    <RegisteredPlayers></RegisteredPlayers>
+                                    <EventRegistrationWidget></EventRegistrationWidget>
                                 </Card.Text>
                             </Card.Body>
                         </Card>

@@ -54,7 +54,7 @@ const NewEventModal = (props) => {
     async function onSaveEventHandler(createEventDto) {
         dispatch(adminActions.saveEventRequest());
 
-        const response = await fetch(`${API_URL}/admin/event`, {
+        const response = await fetch(`${API_URL}/event/event`, {
             method: 'POST',
             body: JSON.stringify(createEventDto),
             headers: {
