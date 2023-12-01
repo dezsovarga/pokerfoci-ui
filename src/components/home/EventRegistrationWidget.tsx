@@ -1,4 +1,4 @@
-import React, from 'react';
+import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import PlayerView from "./PlayerView";
 import Button from "react-bootstrap/Button";
