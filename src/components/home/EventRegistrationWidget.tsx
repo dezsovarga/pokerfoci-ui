@@ -5,9 +5,6 @@ import Button from "react-bootstrap/Button";
 import classes from './Home.module.css';
 import {useSelector} from "react-redux";
 
-type EventRegistrationWidgetProps = {
-    loadLatestEvent: () => void
-}
 type PlayerData = {
     username: string;
     skill: number;
@@ -19,7 +16,7 @@ type EventData = {
 const EventRegistrationWidget: React.FC<EventData> = (props) => {
 
     const registeredPlayers = useSelector(state => state.latestEvent.registeredPlayers);
-    const eventData = useSelector(state => state.latestEvent.latestEventData);
+    // const eventData = useSelector(state => state.latestEvent.latestEventData);
 
     const registeredPlayersList = () => {
         return registeredPlayers.map((player, index) => {
