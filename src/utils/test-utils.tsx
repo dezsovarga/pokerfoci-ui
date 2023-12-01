@@ -8,6 +8,7 @@ import signupSlice from '../store/signup-slice';
 import accountActivationSlice from "../store/account-activation-slice";
 import profileSlice from "../store/profile-slice";
 import adminSlice from "../store/admin-slice";
+import latestEventSlice from "../store/latest-event-slice";
 
 export function renderWithProviders(
     ui,
@@ -20,7 +21,8 @@ export function renderWithProviders(
                 signup: signupSlice.reducer,
                 accountActivation: accountActivationSlice.reducer,
                 profile: profileSlice.reducer,
-                admin: adminSlice.reducer
+                admin: adminSlice.reducer,
+                latestEvent: latestEventSlice.reducer
             },
             preloadedState,
         }),

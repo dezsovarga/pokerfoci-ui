@@ -134,4 +134,23 @@ function loadEventsForAdmin() {
     });
 }
 
-export const handlers = [login(), signup(), activateAccount(), changePassword(), loadAccountsForAdmin(), updateAccount(), addAccount(), loadEventsForAdmin()];
+function loadLatestEventData() {
+    return rest.get(`${API_URL}/event/latest`, (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json({
+                id: 1,
+                eventDateTime: "2023-06-29T00:00:00",
+                registeredPlayers: [
+                    {username: "szury", skill: 60},
+                    {username: "horvathkuki", skill: 70}
+                ],
+                score: null,
+                status: "INITIATED",
+            })
+        );
+    });
+}
+
+export const handlers = [login(), signup(), activateAccount(), changePassword(), loadAccountsForAdmin(),
+    updateAccount(), addAccount(), loadEventsForAdmin(), loadLatestEventData()];

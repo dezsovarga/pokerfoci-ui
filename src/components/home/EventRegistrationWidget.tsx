@@ -1,28 +1,40 @@
-import React from 'react';
+import React, from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import PlayerView from "./PlayerView";
 import Button from "react-bootstrap/Button";
 import classes from './Home.module.css';
+import {useSelector} from "react-redux";
 
-const EventRegistrationWidget: React.FC = (props) => {
+type EventRegistrationWidgetProps = {
+    loadLatestEvent: () => void
+}
+type PlayerData = {
+    username: string;
+    skill: number;
+}
+type EventData = {
+    registeredPlayers: PlayerData[];
+}
 
-    const playerData: Array<string> = ['dezsovarga', 'vinitor', 'csabesz',
-        'horvathbotond', 'horvathkuki', 'szury', 'orban', 'kuplung', 'miklos', 'alin', 'szlo', 'atarr', 'tibi', 'calin']
+const EventRegistrationWidget: React.FC<EventData> = (props) => {
 
-    const registeredPlayers = (playerData: Array<string>) => {
-        return playerData.map((playerName, index) => {
+    const registeredPlayers = useSelector(state => state.latestEvent.registeredPlayers);
+    const eventData = useSelector(state => state.latestEvent.latestEventData);
+
+    const registeredPlayersList = () => {
+        return registeredPlayers.map((player, index) => {
             return (
                 <Row>
                     <Col key={index}  >
-                        <PlayerView name={playerName} imageUrl={''} willPlay={index <= 11} ></PlayerView>
+                        <PlayerView name={player.username} imageUrl={''} willPlay={index <= 11} ></PlayerView>
                     </Col>
                 </Row>)
         })
     }
 
     return (
-        <Container>
-            {registeredPlayers(playerData)}
+        <Container data-testid='registered-players-widget'>
+            {registeredPlayersList()}
             <Button className={classes.registerButton} variant="primary">Register Now</Button>
         </Container>
     )
