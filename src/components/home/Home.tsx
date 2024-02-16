@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import classes from './Home.module.css';
 import {Card, Col, Container, Row} from "react-bootstrap";
 import EventRegistrationWidget from "./EventRegistrationWidget";
+import EventHistory from "./EventHistory";
 import {latestEventActions} from "../../store/latest-event-slice";
 import {API_URL} from "../../Constants";
 import {useDispatch, useSelector} from "react-redux";
@@ -47,10 +48,10 @@ const Home: React.FC = () => {
             <Container className={classes.mainContainer}>
                 <Row>
                     <Col >
-                        1 of 2
+                        <EventHistory />
                     </Col>
-                    <Col xs={12} md={4} lg={3}>
-                        <Card data-testid='registered-players-widget-header'>
+                    <Col xs={12} md={4} lg={4}>
+                        <Card className={classes.eventRegistrationWidget} data-testid='registered-players-widget-header'>
                             <Card.Header className={classes.registeredPlayersHeader}>
                                 <h5>Registered players for </h5>
                                 <Moment format="YYYY/MM/DD">{eventData.eventDateTime}</Moment>

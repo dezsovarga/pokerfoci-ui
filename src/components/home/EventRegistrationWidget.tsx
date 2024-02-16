@@ -32,7 +32,7 @@ const EventRegistrationWidget: React.FC<EventData> = (props) => {
             return (
                 <Row>
                     <Col key={index}  >
-                        <PlayerView name={player.username} imageUrl={''} willPlay={index <= 11} ></PlayerView>
+                        <PlayerView name={player.username} imageUrl={''} willPlay={index <= 2} ></PlayerView>
                     </Col>
                 </Row>)
         })
