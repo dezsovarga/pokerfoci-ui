@@ -7,7 +7,9 @@ const latestEventSlice = createSlice({
         successMessage: '',
         loadingError: '',
         latestEventData: {},
-        registeredPlayers: []
+        registeredPlayers: [],
+        eventLogs: []
+
     },
     reducers: {
         loadLatestEventRequest(state) {
@@ -21,7 +23,8 @@ const latestEventSlice = createSlice({
             state.successMessage = action.payload.successMessage;
             state.loadingError = '';
             state.latestEventData = action.payload.data;
-            state.registeredPlayers = action.payload.data.registeredPlayers
+            state.registeredPlayers = action.payload.data.registeredPlayers;
+            state.eventLogs = action.payload.data.eventLogs;
         },
 
         loadLatestEventFailure(state, action) {

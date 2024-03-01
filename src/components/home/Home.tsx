@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import classes from './Home.module.css';
 import {Card, Col, Container, Row} from "react-bootstrap";
 import EventRegistrationWidget from "./EventRegistrationWidget";
-import EventHistory from "./EventHistory";
+import EventLogs from "./EventLogs";
 import {latestEventActions} from "../../store/latest-event-slice";
 import {API_URL} from "../../Constants";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,6 +13,7 @@ const Home: React.FC = () => {
     const dispatch = useDispatch();
     const {token} = useSelector(state => state.login);
     const eventData = useSelector(state => state.latestEvent.latestEventData);
+    const eventLogs = useSelector(state => state.latestEvent.eventLogs);
 
     async function loadLatestEvent() {
         dispatch(latestEventActions.loadLatestEventRequest());
@@ -48,7 +49,7 @@ const Home: React.FC = () => {
             <Container className={classes.mainContainer}>
                 <Row>
                     <Col >
-                        <EventHistory />
+                        <EventLogs logs={eventLogs}/>
                     </Col>
                     <Col xs={12} md={4} lg={4}>
                         <Card className={classes.eventRegistrationWidget} data-testid='registered-players-widget-header'>
