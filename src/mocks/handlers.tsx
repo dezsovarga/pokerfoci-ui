@@ -145,6 +145,7 @@ function loadLatestEventData() {
                     {username: "szury", skill: 60},
                     {username: "horvathkuki", skill: 70}
                 ],
+                eventLogs: [{logTime: "2023-06-29T00:00:00", logMessage: "szury registered to the event"},],
                 score: null,
                 status: "INITIATED",
             })
