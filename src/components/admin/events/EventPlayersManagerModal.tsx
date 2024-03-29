@@ -85,7 +85,7 @@ const EventPlayersManagerModal: React.FC<EventPlayersManagerModalProp> = (props)
 
     return (
         <React.Fragment>
-            <Modal show={showModal} onHide={handleClose} data-testid='add-new-event-modal'>
+            <Modal show={showModal} onHide={handleClose} data-testid='update-event-modal'>
                 <Modal.Header closeButton={true}>
                     <Modal.Title>Manage players</Modal.Title>
                 </Modal.Header>
@@ -99,10 +99,10 @@ const EventPlayersManagerModal: React.FC<EventPlayersManagerModalProp> = (props)
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose} data-testid='add-new-event-modal-close'>
+                    <Button variant="secondary" onClick={handleClose} data-testid='update-event-modal-close'>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleSubmit} type="submit" data-testid='new-event-submit-button'>
+                    <Button variant="primary" onClick={handleSubmit} type="submit" data-testid='update-event-submit-button'>
                         Submit
                     </Button>
                 </Modal.Footer>

@@ -49,7 +49,7 @@ const AdminRegisteredPlayers: React.FC<AdminRegisteredPlayersProp> = (props) => 
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Registered Players</th>
+                            <th data-testid='registered-players'>Registered Players</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -58,7 +58,7 @@ const AdminRegisteredPlayers: React.FC<AdminRegisteredPlayersProp> = (props) => 
                     </Table>
                     <Button onClick={handleShowPlayerManager}
                         type="submit" variant="primary"
-                        data-testid='register-button'>
+                        data-testid='manage-players-button'>
                         Manage players
                     </Button>
                 </div>
