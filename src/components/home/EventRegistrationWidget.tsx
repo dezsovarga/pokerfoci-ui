@@ -9,7 +9,7 @@ import {latestEventActions} from "../../store/latest-event-slice";
 import {registerToLatestEventActions} from "../../store/register-to-latest-event-slice";
 import {unRegisterFromLatestEventActions} from "../../store/unregister-from-latest-event-slice";
 
-type PlayerData = {
+export type PlayerData = {
     username: string;
     userEmail: string;
     skill: number;

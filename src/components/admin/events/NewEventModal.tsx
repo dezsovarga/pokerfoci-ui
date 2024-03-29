@@ -6,10 +6,9 @@ import {adminActions} from "../../../store/admin-slice";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Form from "react-bootstrap/Form";
-import ListGroup from 'react-bootstrap/ListGroup';
 import classes from "./NewEventModal.module.css";
-import {Circle, CheckCircle} from 'react-bootstrap-icons';
 import {API_URL} from "../../../Constants";
+import PlayerSelector from './PlayerSelector';
 
 const NewEventModal = (props) => {
 
@@ -82,31 +81,6 @@ const NewEventModal = (props) => {
         }
     }
 
-    const updatePlayerSelection = (selectedIndex) => {
-        dispatch(adminActions.updateAccountSelection({selectedIndex: selectedIndex}));
-    };
-
-    const allPayersList = () => {
-        return (
-            <div className={classes.playerList}>
-                <ListGroup  as="ol" >
-                    {accounts.map((player, index) =>
-                        <ListGroup.Item key={player.id} onClick={() => updatePlayerSelection(index)}
-                                        as="li"
-                                        className="d-flex justify-content-between align-items-start">
-                            <div className="ms-2 me-auto">
-                                <div className="fw">{player.username}</div>
-                            </div>
-                            {!player.selected && <Circle className={classes.playerCheck} data-testid='player-not-checked'/>}
-                            {player.selected && <CheckCircle className={classes.playerCheck} data-testid='player-checked'/>}
-
-                        </ListGroup.Item> )
-                    }
-                </ListGroup>
-            </div>
-        )
-    }
-
     useEffect(() => {
         props.loadAccounts();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,7 +93,7 @@ const NewEventModal = (props) => {
                     <Modal.Title>Create new event</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form.Group className="mb-3" controlId="formBasicUsername">
+                    <Form.Group className="mb-3" controlId="formDatePicker">
                         <Form.Label>Select event date and time</Form.Label>
                         <DatePicker
                             selected={selectedDate}
@@ -131,9 +105,8 @@ const NewEventModal = (props) => {
                             placeholderText="Select a date and time"
                         />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicUsername">
-                        <Form.Label>Select players</Form.Label>
-                        {allPayersList()}
+                    <Form.Group className="mb-3" controlId="formPlayerSelector">
+                        <PlayerSelector accounts={accounts}/>
                     </Form.Group>
                     <div>
                         <p className={classes.error}>{saveEventsError}</p>
