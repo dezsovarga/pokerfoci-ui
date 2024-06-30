@@ -17,7 +17,7 @@ type TeamVariationProp = {
     variation: TeamVariation
 }
 
-const TeamVariation: React.FC<TeamVariationProp> = (props) => {
+const TeamVariationBox: React.FC<TeamVariationProp> = (props) => {
 
     const listTeamMembers = (team: Team) => {
         return team.teamMembers.map((player) => {
@@ -43,4 +43,4 @@ const TeamVariation: React.FC<TeamVariationProp> = (props) => {
     );
 }
 
-export default TeamVariation;
+export default TeamVariationBox;

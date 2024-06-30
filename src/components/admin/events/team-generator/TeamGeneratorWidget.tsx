@@ -5,7 +5,7 @@ import {API_URL} from "../../../../Constants";
 import {latestEventActions} from "../../../../store/latest-event-slice";
 import {useDispatch, useSelector} from "react-redux";
 import {Col, Row} from "react-bootstrap";
-import TeamVariation from "./TeamVariation";
+import TeamVariationBox, {TeamVariation} from "./TeamVariationBox";
 
 type TeamGeneratorWidgetProp = {
     teamVariations: TeamVariation[]
@@ -23,7 +23,7 @@ const TeamGeneratorWidget: React.FC<TeamGeneratorWidgetProp> = (props) => {
             return (
                 <Row>
                     <Col key={index}  >
-                        <TeamVariation variation={variation} ></TeamVariation>
+                        <TeamVariationBox variation={variation} ></TeamVariationBox>
                     </Col>
                 </Row>)
         })
