@@ -9,7 +9,6 @@ import {PlayerData} from "../../home/EventRegistrationWidget";
 
 type AdminRegisteredPlayersProp = {
     registeredPlayers: PlayerData[],
-    loadEvents: () => void
 }
 
 const AdminRegisteredPlayers: React.FC<AdminRegisteredPlayersProp> = (props) => {

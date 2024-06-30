@@ -44,9 +44,10 @@ const ActivateAccount = (props) => {
       } else {
           dispatch(activateAccountActions.confirmSuccess());
           dispatch(signupActions.clearSignupData());
+          const decodedData = JSON.parse(atob(data.bearerToken));
           dispatch(loginActions.loginSuccess({
               username: data.username,
-              token: data.bearerToken,
+              token: decodedData.token,
               roles: data.roles,
           }));
       }

@@ -2,11 +2,11 @@ import React, {useEffect} from "react";
 import {createTheme, ThemeProvider} from "@mui/material";
 import MaterialTable from "material-table";
 import {PlusCircle} from "react-bootstrap-icons";
-import AdminRegisteredPlayers from "./AdminRegisteredPlayers";
 import classes from "./EventsTable.module.css";
 import {adminActions} from "../../../store/admin-slice";
 import {useDispatch, useSelector} from "react-redux";
 import NewEventModal from "./NewEventModal";
+import EventDetails from "./EventDetails";
 
 const EventsTable: React.FC<{ loadEvents: () => void; loadAccounts: () => void}> = (props) => {
 
@@ -41,7 +41,8 @@ const EventsTable: React.FC<{ loadEvents: () => void; loadAccounts: () => void}>
                         enablePagination={false}
                         title='Events'
                         detailPanel={rowData => {
-                            return <AdminRegisteredPlayers registeredPlayers={rowData.registeredPlayers}></AdminRegisteredPlayers>
+                            return <EventDetails loadEvents={props.loadEvents} registeredPlayers={rowData.registeredPlayers} teamVariations={rowData.teamVariations}></EventDetails>
+                            // return <AdminRegisteredPlayers registeredPlayers={rowData.registeredPlayers}></AdminRegisteredPlayers>
                         }}
                         onRowClick={(event, rowData, togglePanel) => togglePanel()}
                         options={{
