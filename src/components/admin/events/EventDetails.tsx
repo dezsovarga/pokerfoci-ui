@@ -3,6 +3,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import {PlayerData} from "../../home/EventRegistrationWidget";
 import AdminRegisteredPlayers from "./AdminRegisteredPlayers";
 import TeamGeneratorWidget from "./team-generator/TeamGeneratorWidget";
+import EventStatusBar from "./EventStatusBar";
 
 type EventDetailsProp = {
     status: string
@@ -18,6 +19,9 @@ const EventDetails: React.FC<EventDetailsProp> = (props) => {
 
     return (
         <Container>
+            <Row>
+                <Col><EventStatusBar stepNumber={3} /></Col>
+            </Row>
             <Row>
                 <Col xs={12} md={6} lg={4}>
                     <AdminRegisteredPlayers registeredPlayers={props.registeredPlayers}></AdminRegisteredPlayers>
