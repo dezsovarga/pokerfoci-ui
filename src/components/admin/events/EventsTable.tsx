@@ -42,7 +42,6 @@ const EventsTable: React.FC<{ loadEvents: () => void; loadAccounts: () => void}>
                         title='Events'
                         detailPanel={rowData => {
                             return <EventDetails loadEvents={props.loadEvents} registeredPlayers={rowData.registeredPlayers} teamVariations={rowData.teamVariations}></EventDetails>
-                            // return <AdminRegisteredPlayers registeredPlayers={rowData.registeredPlayers}></AdminRegisteredPlayers>
                         }}
                         onRowClick={(event, rowData, togglePanel) => togglePanel()}
                         options={{

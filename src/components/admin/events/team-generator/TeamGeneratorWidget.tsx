@@ -6,10 +6,21 @@ import {latestEventActions} from "../../../../store/latest-event-slice";
 import {useDispatch, useSelector} from "react-redux";
 import {Col, Row} from "react-bootstrap";
 import TeamVariationBox, {TeamVariation} from "./TeamVariationBox";
+import generateIcon from "../../../../assets/generate_icon.png";
+import styled from "styled-components";
 
 type TeamGeneratorWidgetProp = {
     teamVariations: TeamVariation[]
 }
+
+const GenerateIcon = styled.img`
+    width: 120px;
+    margin: 15px
+`
+
+const TeamGeneratorWrapper = styled.div`
+    padding: 20px;
+`
 
 const TeamGeneratorWidget: React.FC<TeamGeneratorWidgetProp> = (props) => {
 
@@ -62,12 +73,20 @@ const TeamGeneratorWidget: React.FC<TeamGeneratorWidgetProp> = (props) => {
 
     return (
         <div className={classes.teamGenerator }>
-            <form onSubmit={submitHandler}>
-                <Button type="submit" variant="primary"
-                        data-testid='manage-players-button'>
-                    Generate teams
-                </Button>
-            </form>
+            <TeamGeneratorWrapper>
+                <form onSubmit={submitHandler}>
+                    <div>
+                        <GenerateIcon className={classes.avatarIcon} alt="generate-icon" src={generateIcon}
+                                      data-testid='generate-icon'/>
+                    </div>
+
+                    <Button type="submit" variant="primary"
+                            data-testid='manage-players-button'>
+                        Generate teams
+                    </Button>
+                </form>
+            </TeamGeneratorWrapper>
+
             {teamVariationList()}
         </div>
     );

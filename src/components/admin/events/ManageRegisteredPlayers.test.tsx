@@ -1,7 +1,7 @@
 import {renderWithProviders} from "../../../utils/test-utils";
 import {screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import AdminRegisteredPlayers from "./AdminRegisteredPlayers";
+import ManageRegisteredPlayers from "./ManageRegisteredPlayers";
 
 const registeredPlayers = [
     {username: "szury", userEmail: "email", skill: 60},
@@ -35,11 +35,11 @@ const initialState = {
     }
 }
 
-describe ('AdminRegisteredPlayers component', () => {
+describe ('ManageRegisteredPlayers component', () => {
 
-    test('Rendering AdminRegisteredPlayers component with a list of players', async () => {
+    test('Rendering ManageRegisteredPlayers component with a list of players', async () => {
 
-        let {store} = renderWithProviders(<AdminRegisteredPlayers registeredPlayers={registeredPlayers}/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<ManageRegisteredPlayers registeredPlayers={registeredPlayers}/>, { preloadedState: initialState});
 
         // Assert
         const registeredPlayersTableTitle = await screen.findByTestId("registered-players");
@@ -52,9 +52,9 @@ describe ('AdminRegisteredPlayers component', () => {
         expect(managePlayersButton).toBeInTheDocument();
     })
 
-    test('Rendering AdminRegisteredPlayers and opening player manager modal', async () => {
+    test('Rendering ManageRegisteredPlayers and opening player manager modal', async () => {
 
-        let {store} = renderWithProviders(<AdminRegisteredPlayers registeredPlayers={registeredPlayers}/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<ManageRegisteredPlayers registeredPlayers={registeredPlayers}/>, { preloadedState: initialState});
 
         const managePlayersButton = await screen.findByTestId("manage-players-button");
         userEvent.click(managePlayersButton);
