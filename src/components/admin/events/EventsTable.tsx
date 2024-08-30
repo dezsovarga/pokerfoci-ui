@@ -6,7 +6,6 @@ import classes from "./EventsTable.module.css";
 import {adminActions} from "../../../store/admin-slice";
 import {useDispatch, useSelector} from "react-redux";
 import NewEventModal from "./NewEventModal";
-import EventDetails from "./EventDetails";
 
 const EventsTable: React.FC<{ loadEvents: () => void; loadAccounts: () => void}> = (props) => {
 
@@ -41,7 +40,8 @@ const EventsTable: React.FC<{ loadEvents: () => void; loadAccounts: () => void}>
                         enablePagination={false}
                         title='Events'
                         detailPanel={rowData => {
-                            return <EventDetails loadEvents={props.loadEvents} registeredPlayers={rowData.registeredPlayers} teamVariations={rowData.teamVariations}></EventDetails>
+                            return <div>Event summary for past events</div>
+                            // <EventDetails /*loadEvents={props.loadEvents}*/ registeredPlayers={rowData.registeredPlayers} teamVariations={rowData.teamVariations}></EventDetails>
                         }}
                         onRowClick={(event, rowData, togglePanel) => togglePanel()}
                         options={{

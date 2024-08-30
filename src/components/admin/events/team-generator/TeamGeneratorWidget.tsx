@@ -26,10 +26,11 @@ const TeamGeneratorWidget: React.FC<TeamGeneratorWidgetProp> = (props) => {
 
     const dispatch = useDispatch();
     const {token} = useSelector(state => state.login);
-    const [teamVariationsFromState, setTeamVariationsFromState] = useState(null);
+    // const [teamVariationsFromState, setTeamVariationsFromState] = useState(null);
+    const [showGenerateButton, setShowGenerateButton] = useState(props.teamVariations.length === 0)
 
     const teamVariationList = () => {
-        const teamVariationList = teamVariationsFromState ?? props.teamVariations;
+        const teamVariationList = props.teamVariations;
         return teamVariationList.map((variation, index) => {
             return (
                 <Row>
@@ -54,7 +55,7 @@ const TeamGeneratorWidget: React.FC<TeamGeneratorWidgetProp> = (props) => {
             if (res.ok) {
                 res.json().then((data) => {
                     dispatch(latestEventActions.generateTeamsSuccess({data: data}));
-                    setTeamVariationsFromState(data.teamVariations)
+                    setShowGenerateButton(false)
                 });
             } else {
                 res.json().then((data) => {
@@ -80,10 +81,10 @@ const TeamGeneratorWidget: React.FC<TeamGeneratorWidgetProp> = (props) => {
                                       data-testid='generate-icon'/>
                     </div>
 
-                    <Button type="submit" variant="primary"
-                            data-testid='manage-players-button'>
+                    {showGenerateButton && <Button type="submit" variant="primary"
+                                                   data-testid='manage-players-button'>
                         Generate teams
-                    </Button>
+                    </Button>}
                 </form>
             </TeamGeneratorWrapper>
 

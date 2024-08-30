@@ -1,13 +1,15 @@
 import classes from "./NewEventModal.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import {CheckCircle, Circle} from "react-bootstrap-icons";
-import React from "react";
+import React, {useEffect} from "react";
 import {adminActions} from "../../../store/admin-slice";
 import {useDispatch} from "react-redux";
 import Form from "react-bootstrap/Form";
+import {PlayerData} from "../../home/EventRegistrationWidget";
 
 type PlayerSelectorProp = {
     accounts: AccountData[];
+    preselectedPlayers: PlayerData[];
 }
 
 export type AccountData = {
@@ -23,6 +25,21 @@ export type AccountData = {
 const PlayerSelector: React.FC<PlayerSelectorProp> = (props) => {
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        preselectRegisteredUsers()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const preselectRegisteredUsers = () => {
+
+        props.accounts.forEach((obj, index) => {
+            let toSelect = props.preselectedPlayers.some(player => player.userEmail === obj.email)
+            if (toSelect && !obj.selected) {
+                dispatch(adminActions.updateAccountSelection({selectedIndex: index}));
+            }
+        })
+    }
 
     const updatePlayerSelection = (selectedIndex) => {
         dispatch(adminActions.updateAccountSelection({selectedIndex: selectedIndex}));

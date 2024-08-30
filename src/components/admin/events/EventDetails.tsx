@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {Col, Container, Row} from "react-bootstrap";
-import {PlayerData} from "../../home/EventRegistrationWidget";
 import ManageRegisteredPlayers from "./ManageRegisteredPlayers";
 import Button from '@mui/material/Button';
 import styled from "styled-components";
@@ -10,16 +9,8 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Box from '@mui/material/Box';
-
-type EventDetailsProp = {
-    status: string
-    registeredPlayers: PlayerData[],
-    teamVariations: {
-        team1: PlayerData[],
-        team2: PlayerData[],
-        skillDifference: number
-    }
-}
+import {useSelector} from "react-redux";
+import {useLoadLatestEvent} from "../../../hooks/useAdminService";
 
 const PreviousStep = styled.div`
     display: flex;
@@ -35,7 +26,11 @@ const StepComponent = styled.div`
     align-items: center;
 `;
 
-const EventDetails: React.FC<EventDetailsProp> = (props) => {
+const EventDetails: React.FC = () => {
+
+    const eventData = useSelector(state => state.latestEvent.latestEventData);
+
+    useLoadLatestEvent('/event/latest');
 
     const steps :string[] = ["Event created", "Manage players","Generate teams",
         "Voting", "Publish results", "Introduce score", "Event completed"]
@@ -49,9 +44,9 @@ const EventDetails: React.FC<EventDetailsProp> = (props) => {
     const CurrentStepComponent = (stepNumber: number) => {
         switch (stepNumber) {
             case 1:
-                return <ManageRegisteredPlayers registeredPlayers={props.registeredPlayers}></ManageRegisteredPlayers>
+                return <ManageRegisteredPlayers></ManageRegisteredPlayers>
             case 2:
-                return <TeamGeneratorWidget teamVariations={ props.teamVariations } />
+                return <TeamGeneratorWidget teamVariations={ eventData.teamVariations } />
             case 3:
                 console.log("Step 3 component not yet implemented");
                 break;

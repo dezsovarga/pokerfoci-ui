@@ -16,6 +16,28 @@ const initialState = {
         isLoading: false,
         authError: ''
     },
+    latestEvent: {
+      registeredPlayers: [
+          {
+              username: 'szury',
+              userEmail: 'szury@szury.com',
+              skill: 60,
+              registrationDate: '2024-08-16T14:01:30'
+          },
+          {
+              username: 'dezsovarga',
+              userEmail: 'dezso@dezso.com',
+              skill: 60,
+              registrationDate: '2024-08-16T14:01:30'
+          },
+          {
+              username: 'kuki',
+              userEmail: 'kuki@kuki.com',
+              skill: 60,
+              registrationDate: '2024-08-16T14:01:30'
+          }
+      ]
+    },
     admin: {
         accounts: {
             accountData: [],
@@ -39,7 +61,7 @@ describe ('ManageRegisteredPlayers component', () => {
 
     test('Rendering ManageRegisteredPlayers component with a list of players', async () => {
 
-        let {store} = renderWithProviders(<ManageRegisteredPlayers registeredPlayers={registeredPlayers}/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<ManageRegisteredPlayers />, { preloadedState: initialState});
 
         // Assert
         const registeredPlayersTableTitle = await screen.findByTestId("registered-players");
@@ -48,13 +70,17 @@ describe ('ManageRegisteredPlayers component', () => {
         const playerName = await screen.findByText('dezsovarga');
         expect(playerName).toBeInTheDocument();
 
+        const szury = await screen.findByText('szury');
+        expect(szury).toBeInTheDocument();
+
+
         const managePlayersButton = await screen.findByTestId("manage-players-button");
         expect(managePlayersButton).toBeInTheDocument();
     })
 
     test('Rendering ManageRegisteredPlayers and opening player manager modal', async () => {
 
-        let {store} = renderWithProviders(<ManageRegisteredPlayers registeredPlayers={registeredPlayers}/>, { preloadedState: initialState});
+        let {store} = renderWithProviders(<ManageRegisteredPlayers />, { preloadedState: initialState});
 
         const managePlayersButton = await screen.findByTestId("manage-players-button");
         userEvent.click(managePlayersButton);

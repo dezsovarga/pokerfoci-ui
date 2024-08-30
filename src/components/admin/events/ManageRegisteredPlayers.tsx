@@ -1,17 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 import classes from "./ManageRegisteredPlayers.module.css";
 import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import EventPlayersManagerModal from "./EventPlayersManagerModal";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {adminActions} from "../../../store/admin-slice";
-import {PlayerData} from "../../home/EventRegistrationWidget";
 import manageIcon from "../../../assets/manage_teams.png";
 import styled from "styled-components";
-
-type ManageRegisteredPlayersProp = {
-    registeredPlayers: PlayerData[],
-}
 
 const ManageTeamIcon = styled.img`
     width: 120px;
@@ -22,10 +17,11 @@ const ManageTeamWrapper = styled.div`
     padding: 15px;
 `
 
-const ManageRegisteredPlayers: React.FC<ManageRegisteredPlayersProp> = (props) => {
+const ManageRegisteredPlayers: React.FC = (props) => {
+
+    const registeredPlayers = useSelector(state => state.latestEvent.registeredPlayers);
 
     const dispatch = useDispatch();
-    const [registeredPlayers, setRegisteredPlayers] = useState(props.registeredPlayers);
 
     const playerCard = (player) => {
         return (
@@ -46,10 +42,6 @@ const ManageRegisteredPlayers: React.FC<ManageRegisteredPlayersProp> = (props) =
             <td>{playerCard(player)}</td>
         </tr>
     );
-
-    const onUpdateRegisteredPlayersList = (updatedRegisteredPlayers) => {
-        setRegisteredPlayers(updatedRegisteredPlayers);
-    }
 
     const RegisteredPlayersTable = () => {
         return (
@@ -88,8 +80,7 @@ const ManageRegisteredPlayers: React.FC<ManageRegisteredPlayersProp> = (props) =
     return (
         <React.Fragment>
             <RegisteredPlayersTable/>
-            <EventPlayersManagerModal preselectedPlayers={props.registeredPlayers}
-                                      updateRegisteredPlayersList={onUpdateRegisteredPlayersList}/>
+            <EventPlayersManagerModal preselectedPlayers={registeredPlayers}/>
         </React.Fragment>
 
     );

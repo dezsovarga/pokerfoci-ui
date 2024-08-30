@@ -14,6 +14,7 @@ const AdminBody: React.FC<AdminBodyProps> = (props) => {
     const dispatch = useDispatch();
     const {token} = useSelector(state => state.login);
 
+    //TODO: use custom hook from useAdminService
     async function loadAccounts() {
         dispatch(adminActions.loadAccountsRequest());
 

@@ -1,48 +1,17 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import classes from './Home.module.css';
 import {Card, Col, Container, Row} from "react-bootstrap";
 import EventRegistrationWidget from "./EventRegistrationWidget";
 import EventLogs from "./EventLogs";
-import {latestEventActions} from "../../store/latest-event-slice";
-import {API_URL} from "../../Constants";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import Moment from 'react-moment';
+import {useLoadLatestEvent} from "../../hooks/useAdminService";
 
 const Home: React.FC = () => {
-
-    const dispatch = useDispatch();
-    const {token} = useSelector(state => state.login);
     const eventData = useSelector(state => state.latestEvent.latestEventData);
     const eventLogs = useSelector(state => state.latestEvent.eventLogs);
 
-    async function loadLatestEvent() {
-        dispatch(latestEventActions.loadLatestEventRequest());
-
-        const response = await fetch(`${API_URL}/event/latest`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }).catch((err) => {
-            dispatch(latestEventActions.loadLatestEventFailure({
-                loadingError: err.message
-            }));
-        });
-        const data = await response.json();
-        if (response.status !== 200) {
-            dispatch(latestEventActions.loadLatestEventFailure({
-                loadingError: data.reason || data.error
-            }));
-        } else {
-            dispatch(latestEventActions.loadLatestEventSuccess({data: data}));
-        }
-    }
-
-    useEffect(() => {
-        loadLatestEvent()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    useLoadLatestEvent('/event/latest');
 
     return (
         <section className={classes.starting} data-testid='home-page'>

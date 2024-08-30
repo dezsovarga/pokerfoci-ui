@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import PlayerSelector, {AccountData} from "./PlayerSelector";
@@ -8,10 +8,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {adminActions} from "../../../store/admin-slice";
 import {PlayerData} from "../../home/EventRegistrationWidget";
 import {API_URL} from "../../../Constants";
+import useLoadAccounts from "../../../hooks/useAdminService";
+import {latestEventActions} from "../../../store/latest-event-slice";
 
 type EventPlayersManagerModalProp = {
     preselectedPlayers: PlayerData[],
-    updateRegisteredPlayersList: (updatedRegisteredPlayers) => void
 }
 
 const EventPlayersManagerModal: React.FC<EventPlayersManagerModalProp> = (props) => {
@@ -23,20 +24,7 @@ const EventPlayersManagerModal: React.FC<EventPlayersManagerModalProp> = (props)
     const saveEventsLoading = useSelector(state => state.admin.saveEvent.isLoading);
     const token = useSelector(state => state.login.token);
 
-    useEffect(() => {
-        preselectRegisteredUsers()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const preselectRegisteredUsers = () => {
-
-        accounts.forEach((obj, index) => {
-            let toSelect = props.preselectedPlayers.some(player => player.userEmail === obj.email)
-            if (toSelect) {
-                dispatch(adminActions.updateAccountSelection({selectedIndex: index}));
-            }
-        })
-    }
+    useLoadAccounts('/admin/accounts');
 
     const handleClose = () => {
         dispatch(adminActions.closeEventPlayersManagerModal());
@@ -72,7 +60,8 @@ const EventPlayersManagerModal: React.FC<EventPlayersManagerModalProp> = (props)
             const data = await response.json();
             dispatch(adminActions.updateEventSuccess());
             dispatch(adminActions.closeEventPlayersManagerModal());
-            props.updateRegisteredPlayersList(data.registeredPlayers);
+            dispatch(latestEventActions.loadLatestEventSuccess({data: data}));
+
         }
         if (!response.ok) {
             const data = await response.json();
@@ -91,7 +80,7 @@ const EventPlayersManagerModal: React.FC<EventPlayersManagerModalProp> = (props)
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group className="mb-3" controlId="formPlayerSelector">
-                        <PlayerSelector accounts={accounts}/>
+                        <PlayerSelector accounts={accounts} preselectedPlayers={props.preselectedPlayers}/>
                     </Form.Group>
                     <div>
                         <p className={classes.error}>{saveEventsError}</p>
