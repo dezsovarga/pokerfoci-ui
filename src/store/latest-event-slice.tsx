@@ -4,6 +4,7 @@ const latestEventSlice = createSlice({
     name: 'latestEvent',
     initialState: {
         generatingTeamsInProgress: false,
+        updatingVariationsSelectionInProgress: false,
         isLoading: false,
         successMessage: '',
         loadingError: '',
@@ -26,11 +27,30 @@ const latestEventSlice = createSlice({
             state.loadingError = '';
             state.latestEventData = action.payload.data;
             state.registeredPlayers = action.payload.data.registeredPlayers;
+            state.teamVariations = action.payload.data.teamVariations;
             state.eventLogs = action.payload.data.eventLogs;
         },
 
         loadLatestEventFailure(state, action) {
             state.isLoading = false;
+            state.loadingError = action.payload.loadingError;
+        },
+
+        updateVariationSelectionsRequest(state) {
+            state.updatingVariationsSelectionInProgress = true;
+        },
+
+        updateVariationSelectionsSuccess(state, action) {
+            state.updatingVariationsSelectionInProgress = false;
+            state.teamVariations = action.payload.data.teamVariations;
+            state.latestEventData = action.payload.data;
+            state.registeredPlayers = action.payload.data.registeredPlayers;
+            state.eventLogs = action.payload.data.eventLogs;
+            state.successMessage = action.payload.successMessage;
+        },
+
+        updateVariationSelectionsFailure(state, action) {
+            state.updatingVariationsSelectionInProgress = false;
             state.loadingError = action.payload.loadingError;
         },
 
@@ -48,6 +68,16 @@ const latestEventSlice = createSlice({
             state.latestEventData = action.payload.data;
             state.registeredPlayers = action.payload.data.registeredPlayers;
             state.eventLogs = action.payload.data.eventLogs;
+        },
+
+        //used for team variation selection
+        updateVariationSelection(state, action) {
+            state.teamVariations = state.teamVariations.map((obj, index) => {
+                if (action.payload.selectedIndex === index) {
+                    return {...obj, selectedForVoting: !obj.selectedForVoting};
+                }
+                return obj;
+            });
         },
 
         generateTeamsFailure(state, action) {

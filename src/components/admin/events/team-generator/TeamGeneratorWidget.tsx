@@ -8,6 +8,7 @@ import {Col, Row} from "react-bootstrap";
 import TeamVariationBox, {TeamVariation} from "./TeamVariationBox";
 import generateIcon from "../../../../assets/generate_icon.png";
 import styled from "styled-components";
+import {Checkbox} from "@mui/material";
 
 type TeamGeneratorWidgetProp = {
     teamVariations: TeamVariation[]
@@ -18,6 +19,12 @@ const GenerateIcon = styled.img`
     margin: 15px
 `
 
+const VariationWithCheckbox = styled.span`
+    display: flex;
+    text-align: start;
+    padding: 10px;
+`
+
 const TeamGeneratorWrapper = styled.div`
     padding: 20px;
 `
@@ -26,16 +33,25 @@ const TeamGeneratorWidget: React.FC<TeamGeneratorWidgetProp> = (props) => {
 
     const dispatch = useDispatch();
     const {token} = useSelector(state => state.login);
-    // const [teamVariationsFromState, setTeamVariationsFromState] = useState(null);
+    const teamVariations = useSelector(state => state.latestEvent.teamVariations);
     const [showGenerateButton, setShowGenerateButton] = useState(props.teamVariations.length === 0)
 
+    const updateVariationSelection = (selectedIndex: number) => {
+        dispatch(latestEventActions.updateVariationSelection({selectedIndex: selectedIndex}));
+    };
+
     const teamVariationList = () => {
-        const teamVariationList = props.teamVariations;
-        return teamVariationList.map((variation, index) => {
+        return teamVariations.map((variation: TeamVariation, index) => {
             return (
                 <Row>
-                    <Col key={index}  >
-                        <TeamVariationBox variation={variation} ></TeamVariationBox>
+                    <Col key={index} >
+                        <VariationWithCheckbox>
+                            {selectedVariationsNumber() === 3 && !variation.selectedForVoting &&
+                                <Checkbox disabled checked={variation.selectedForVoting} />}
+                            {(selectedVariationsNumber() !== 3 || (selectedVariationsNumber() === 3 && variation.selectedForVoting)) &&
+                                <Checkbox checked={variation.selectedForVoting} onClick={() => updateVariationSelection(index)}/> }
+                            <TeamVariationBox variation={variation} ></TeamVariationBox>
+                        </VariationWithCheckbox>
                     </Col>
                 </Row>)
         })
@@ -68,8 +84,46 @@ const TeamGeneratorWidget: React.FC<TeamGeneratorWidgetProp> = (props) => {
         });
     }
 
+    const updateSelections = (event) => {
+        event.preventDefault();
+
+        const selectedVariationIdsParam =
+            teamVariations.filter((v: TeamVariation) => v.selectedForVoting).map( (variation: TeamVariation) => variation.variationId).join(",");
+
+        dispatch(latestEventActions.updateVariationSelectionsRequest());
+
+        fetch(`${API_URL}/event/update-variation-selection?ids=${selectedVariationIdsParam}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(res => {
+            if (res.ok) {
+                res.json().then((data) => {
+                    dispatch(latestEventActions.updateVariationSelectionsSuccess({data: data}));
+                });
+            } else {
+                res.json().then((data) => {
+                    let errorMessage = data.reason || 'Request for team generation failed';
+                    dispatch(latestEventActions.updateVariationSelectionsFailure({
+                        loadingError: errorMessage
+                    }));
+                });
+            }
+        });
+    }
+
     const submitHandler = (event) => {
-         generateTeams(event);
+        if (selectedVariationsNumber() === 3) {
+            updateSelections(event)
+        } else {
+            generateTeams(event);
+        }
+    }
+
+    const selectedVariationsNumber = () => {
+        return teamVariations.filter((v: TeamVariation) => v.selectedForVoting).length;
     }
 
     return (
@@ -81,10 +135,16 @@ const TeamGeneratorWidget: React.FC<TeamGeneratorWidgetProp> = (props) => {
                                       data-testid='generate-icon'/>
                     </div>
 
-                    {showGenerateButton && <Button type="submit" variant="primary"
-                                                   data-testid='manage-players-button'>
-                        Generate teams
-                    </Button>}
+                    {showGenerateButton &&
+                        <Button type="submit" variant="primary" data-testid='generate-teams-button'>
+                            Generate teams
+                        </Button>}
+                    {!showGenerateButton &&
+                        <p>Select 3 variations</p> }
+                    {selectedVariationsNumber() === 3 &&
+                        <Button type="submit" variant="primary" data-testid='save-selections-button'>
+                            Update selection
+                        </Button>}
                 </form>
             </TeamGeneratorWrapper>
 
