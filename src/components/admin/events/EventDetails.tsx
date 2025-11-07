@@ -59,7 +59,7 @@ const EventDetails: React.FC = () => {
     }
 
     const handleStepNumberChange = (stepDirection: number) => {
-        if (activeStepNumber === 3 && stepDirection === 1 && eventData.votingEnabled == false) {
+        if (activeStepNumber === 3 && stepDirection === 1 && eventData.votingEnabled === false) {
             createVoting();
         }
         const newStatusBasedOnActiveStep = getNewStatusBasedOnActiveStepNumber(stepDirection);

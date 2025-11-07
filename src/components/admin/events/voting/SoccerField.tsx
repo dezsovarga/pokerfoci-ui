@@ -1,8 +1,8 @@
 import React from "react";
 import {Col, Row} from "react-bootstrap";
 import styled from "styled-components";
-import {Circle, CircleFill} from "react-bootstrap-icons";
 import {TeamVariationProp} from "../team-generator/TeamVariationBox";
+import {CircleFill} from "react-bootstrap-icons";
 
 const SoccerFieldContainer = styled.div`
     width: 210px;
