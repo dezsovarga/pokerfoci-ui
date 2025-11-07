@@ -2,6 +2,7 @@ import React from "react";
 import {PlayerData} from "../../../home/EventRegistrationWidget";
 import {Card, Col, Row} from "react-bootstrap";
 import styled from "styled-components";
+import SoccerField from "../voting/SoccerField";
 
 type Team = {
     skillSum: number,
@@ -16,7 +17,7 @@ export type TeamVariation = {
     variationId: number
 }
 
-type TeamVariationProp = {
+export type TeamVariationProp = {
     variation: TeamVariation
 }
 
@@ -33,28 +34,32 @@ const TeamVariationBox: React.FC<TeamVariationProp> = (props) => {
         })
     }
 
-    return (
-        <Card style={{
-            backgroundColor: 'lightgray',
-            margin: 2,
-        }} >
-            <Card.Body>
-                <Row>
-                    <Col>
-                        <VariationContent>
-                            <Row>
-                                Skill difference: {props.variation.skillDifference}
-                            </Row>
-                            <Row>
-                                <Col> {listTeamMembers(props.variation.team1)}</Col>
-                                <Col> {listTeamMembers(props.variation.team2)}</Col>
-                            </Row>
-                        </VariationContent>
-                    </Col>
-                </Row>
-            </Card.Body>
-        </Card>
-    );
+    const variationBox = () => {
+        return (
+            <Card style={{
+                backgroundColor: 'lightgray',
+                margin: 2,
+            }}>
+                <Card.Body>
+                    <Row>
+                        <Col>
+                            <VariationContent>
+                                <Row>
+                                    Skill difference: {props.variation.skillDifference}
+                                </Row>
+                                <Row>
+                                    <Col> {listTeamMembers(props.variation.team1)}</Col>
+                                    <Col> {listTeamMembers(props.variation.team2)}</Col>
+                                </Row>
+                            </VariationContent>
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Card>
+        );
+    }
+    return <SoccerField variation={props.variation} />;
+
 }
 
 export default TeamVariationBox;

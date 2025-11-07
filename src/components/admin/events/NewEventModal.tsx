@@ -106,7 +106,7 @@ const NewEventModal = (props) => {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formPlayerSelector">
-                        <PlayerSelector accounts={accounts}/>
+                        <PlayerSelector accounts={accounts} preselectedPlayers={[]}/>
                     </Form.Group>
                     <div>
                         <p className={classes.error}>{saveEventsError}</p>

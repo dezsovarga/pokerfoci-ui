@@ -8,12 +8,16 @@ const latestEventSlice = createSlice({
         isLoading: false,
         successMessage: '',
         loadingError: '',
+        activeStepNumber: 0,
         latestEventData: {},
         registeredPlayers: [],
         teamVariations: [],
-        eventLogs: []
+        eventLogs: [],
+        saveStepNumberInProgress: false,
+        createVotingInProgress: false,
 
     },
+
     reducers: {
         loadLatestEventRequest(state) {
             state.isLoading = true;
@@ -26,6 +30,7 @@ const latestEventSlice = createSlice({
             state.successMessage = action.payload.successMessage;
             state.loadingError = '';
             state.latestEventData = action.payload.data;
+            state.activeStepNumber = ({ "INITIATED": 0, "MANAGEABLE": 1, "TEAM_GENERATION": 2, "VOTING": 3, "VOTING_RESULTS": 4 })[action.payload.data.status];
             state.registeredPlayers = action.payload.data.registeredPlayers;
             state.teamVariations = action.payload.data.teamVariations;
             state.eventLogs = action.payload.data.eventLogs;
@@ -52,6 +57,52 @@ const latestEventSlice = createSlice({
         updateVariationSelectionsFailure(state, action) {
             state.updatingVariationsSelectionInProgress = false;
             state.loadingError = action.payload.loadingError;
+        },
+
+        saveEventStatusRequest(state) {
+            state.saveStepNumberInProgress = true;
+            state.successMessage = '';
+            state.loadingError = '';
+        },
+
+        saveEventStatusFailure(state, action) {
+            state.saveStepNumberInProgress = false;
+            state.successMessage = '';
+            state.loadingError = action.payload.loadingError;
+        },
+
+        saveEventStatusSuccess(state, action) {
+            state.saveStepNumberInProgress = false;
+            state.successMessage = action.payload.successMessage;
+            state.loadingError = '';
+            state.teamVariations = action.payload.data.teamVariations;
+            state.latestEventData = action.payload.data;
+            state.registeredPlayers = action.payload.data.registeredPlayers;
+            state.eventLogs = action.payload.data.eventLogs;
+            state.activeStepNumber = ({ "INITIATED": 0, "MANAGEABLE": 1, "TEAM_GENERATION": 2, "VOTING": 3, "VOTING_RESULTS": 4 })[action.payload.data.status];
+        },
+
+        createVotingRequest(state) {
+            state.createVotingInProgress = true;
+            state.successMessage = '';
+            state.loadingError = '';
+        },
+
+        createVotingFailure(state, action) {
+            state.createVotingInProgress = false;
+            state.successMessage = '';
+            state.loadingError = action.payload.loadingError;
+        },
+
+        createVotingSuccess(state, action) {
+            state.createVotingInProgress = false;
+            state.successMessage = action.payload.successMessage;
+            state.loadingError = '';
+            state.teamVariations = action.payload.data.teamVariations;
+            state.latestEventData = action.payload.data;
+            state.registeredPlayers = action.payload.data.registeredPlayers;
+            state.eventLogs = action.payload.data.eventLogs;
+            state.activeStepNumber = ({ "INITIATED": 0, "MANAGEABLE": 1, "TEAM_GENERATION": 2, "VOTING": 3, "VOTING_RESULTS": 4 })[action.payload.data.status];
         },
 
         generateTeamsRequest(state) {

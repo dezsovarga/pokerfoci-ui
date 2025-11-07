@@ -14,7 +14,7 @@ const PlayerView: React.FC<PlayerViewProps> = (props) => {
 
     return (
         <Card style={{
-            backgroundColor: props.willPlay ? '#c6f7cc' : 'lightpink',
+            backgroundColor: props.willPlay ? '#bcf7b5' : '#e6f1a9',
             margin: 2
         }} >
             <Card.Body>

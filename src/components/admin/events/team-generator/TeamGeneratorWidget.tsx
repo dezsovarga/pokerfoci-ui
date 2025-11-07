@@ -19,7 +19,7 @@ const GenerateIcon = styled.img`
     margin: 15px
 `
 
-const VariationWithCheckbox = styled.span`
+export const VariationWithCheckbox = styled.span`
     display: flex;
     text-align: start;
     padding: 10px;
